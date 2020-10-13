@@ -73,3 +73,9 @@ coordinates coordFromArray(double arr[3])
 
 	return res;
 }
+
+double radiusOfRotation(double omega, double acceleration)
+{
+	double res = acceleration / pow(omega, 2);
+	return res;
+}

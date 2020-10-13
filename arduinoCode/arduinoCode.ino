@@ -14,16 +14,17 @@ Adafruit_LIS3DH lis = Adafruit_LIS3DH(LIS3DH_CS, LIS3DH_MOSI, LIS3DH_MISO, LIS3D
 
 int DOUT = 2;
 int CLK = 3;
-double location1[] = {1, 0, 0};
+double location1[] = {2, 0, 0};
 double totalForce;
 coordinates scale1;
 int DOUT2 = 6;
 int CLK2 = 7;
-double location2[] = {-1, 0, 0};
+double location2[] = {-2, 0, 0};
 coordinates scale2;
 coordinates correction;
 double forces[2];
 coordinates locations[2];
+double omega = 0.104719755;
 
 HX711 loadCell_1;
 double calibration_1 = 345;
@@ -79,8 +80,10 @@ void loop() {
     Serial.read();
     }
     printAccelerometer(event); 
+    double radius = radiusOfRotation(omega, event.acceleration.x);
+    Serial.print("Radius of rotation: "); Serial.print(radius);
     forces[0] = getLoading(loadCell_1);
-    Serial.print("Loading on scale 1: "); Serial.print(forces[0]);
+    Serial.print("\nLoading on scale 1: "); Serial.print(forces[0]);
     forces[1] = getLoading(loadCell_2);
     Serial.print("\nLoading on scale 2: "); Serial.print(forces[1]);
     Serial.print("\n\nLocation of cell 1: ");
@@ -101,7 +104,7 @@ void loop() {
 void printAccelerometer(sensors_event_t event)
 {
   /* Display the results (acceleration is measured in m/s^2) */
-    Serial.print("X: "); Serial.print(event.acceleration.x);
+    Serial.print("\nX: "); Serial.print(event.acceleration.x);
     Serial.print(" \tY: "); Serial.print(event.acceleration.y);
     Serial.print(" \tZ: "); Serial.print(event.acceleration.z);
     Serial.println(" m/s^2 ");
