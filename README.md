@@ -1,0 +1,1 @@
+arduinoCode is the folder with the actual sketch.
