@@ -14,12 +14,12 @@ Adafruit_LIS3DH lis = Adafruit_LIS3DH(LIS3DH_CS, LIS3DH_MOSI, LIS3DH_MISO, LIS3D
 
 int DOUT = 2;
 int CLK = 3;
-double location1[] = {2, 0, 0};
+double location1[] = {5, 0, 0};
 double totalForce;
 coordinates scale1;
 int DOUT2 = 6;
 int CLK2 = 7;
-double location2[] = {-2, 0, 0};
+double location2[] = {-5, 0, 0};
 coordinates scale2;
 coordinates correction;
 double forces[2];
@@ -27,8 +27,8 @@ coordinates locations[2];
 double omega = 0.104719755;
 
 HX711 loadCell_1;
-double calibration_1 = 345;
-double calibration_2 = -295;
+double calibration_1 = 1100;
+double calibration_2 = 1089;
 HX711 loadCell_2;
 double sampleTime = 0.5;
 
@@ -97,18 +97,21 @@ void loop() {
     correction = correctionMoment(totalForce, com);
     Serial.print("\nRequired correction: ");
     printCoord(correction, true);
+    Serial.print("\n\n\n");
   }
   delay(100);
 }
 
 void printAccelerometer(sensors_event_t event)
 {
+    Serial.print("\n\n----NEW TEST----\n\n");
   /* Display the results (acceleration is measured in m/s^2) */
     Serial.print("\nX: "); Serial.print(event.acceleration.x);
     Serial.print(" \tY: "); Serial.print(event.acceleration.y);
     Serial.print(" \tZ: "); Serial.print(event.acceleration.z);
     Serial.println(" m/s^2 ");
     Serial.println();
+
 }
 
 double getLoading(HX711 scale)
