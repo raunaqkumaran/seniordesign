@@ -14,6 +14,22 @@ int add(int a, int b)
 	return res;
 }
 
+struct loadCell {
+    int DOUT;
+    int CLK;
+    double location[3];
+    double calibration;
+};
+
+coordinates coordFromArray(double arr[3])
+{
+    coordinates res;
+    res.x = arr[0];
+    res.y = arr[1];
+    res.z = arr[2];
+
+    return res;
+}
 
 coordinates comLocation(double* forces, coordinates* locations, int length)
 {
@@ -61,16 +77,6 @@ double sumArr(double* arr, int length)
 	double res = 0;
 	for (int i = 0; i < length; i++)
 		res += arr[i];
-	return res;
-}
-
-coordinates coordFromArray(double arr[3])
-{
-	coordinates res;
-	res.x = arr[0];
-	res.y = arr[1];
-	res.z = arr[2];
-
 	return res;
 }
 
