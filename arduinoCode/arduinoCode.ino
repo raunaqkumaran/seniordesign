@@ -119,7 +119,7 @@ void loop() {
     Serial.print("\nLocation of COM: ");
     com = comLocation(forces, locations, 4);
     printCoord(com, false, 0);
-    totalForce = sumArr(forces, 2);
+    totalForce = sumArr(forces, 4);
     correction = correctionMoment(totalForce, com);
     Serial.print("\nRequired correction: ");
     printCoord(correction, true, counterWeight);
@@ -138,6 +138,20 @@ void printAccelerometer(sensors_event_t event)
     Serial.println(" m/s^2 ");
     Serial.println();
 
+}
+
+double dynamicMoment()
+{
+    double forces[3];
+    forces[0] = getLoading(loadCell_1);
+    forces[1] = getLoading(loadCell_2);
+    forces[2] = getLoading(loadCell_3);
+    forces[3] = getLoading(loadCell_4);
+    double totalForce = sumArr(forces, 4);
+    coordinates com = comLocation(forces, locations, 4);
+    coordinates correction = correctionMoment(totalForce, com);
+    double momentMagnitude = correction.magnitude;
+    Serial.print("\nDynamic moment: "); Serial.print(momentMagnitude);
 }
 
 void dynamicBalancing(sensors_event_t event, double omega)
