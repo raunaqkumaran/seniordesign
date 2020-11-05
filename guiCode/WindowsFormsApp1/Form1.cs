@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,19 +13,53 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        private const int MillisecondsTimeout = 1200;
+        private const int SmallTimeout = 100;
+        public SerialPort arduinoPort;
+
         public Form1()
         {
             InitializeComponent();
+            arduinoPort = new SerialPort();
+            arduinoPort.BaudRate = 9600;
+            arduinoPort.PortName = "COM4";
+            arduinoPort.Open();
+            arduinoPort.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void startStaticButton(object sender, EventArgs e)
         {
-
+            arduinoPort.Open();
+            arduinoPort.WriteLine("START_STATIC");
+            double value = Decimal.ToDouble(weightSelectionBox.Value);
+            arduinoPort.WriteLine(value.ToString());
+            System.Threading.Thread.Sleep(MillisecondsTimeout);
+            String result = arduinoPort.ReadLine();
+            comLocation.Text = result;
+            System.Threading.Thread.Sleep(SmallTimeout);
+            result = arduinoPort.ReadLine();
+            offsetLabel.Text = result;
+            arduinoPort.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void endStaticButton(object sender, EventArgs e)
         {
+            arduinoPort.Open();
+            arduinoPort.WriteLine("END_STATIC");
+            arduinoPort.Close();
+        }
 
+        private void startDynamicButton(object sender, EventArgs e)
+        {
+            arduinoPort.Open();
+            arduinoPort.WriteLine("START_DYNAMIC");
+            arduinoPort.WriteLine(omegaBox.Value.ToString());
+        }
+
+        private void endDynamicButton(object sender, EventArgs e)
+        {
+            arduinoPort.WriteLine("END_DYNAMIC");
+            arduinoPort.Close();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -43,6 +78,26 @@ namespace WindowsFormsApp1
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void weightSelectionBox_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
 
         }

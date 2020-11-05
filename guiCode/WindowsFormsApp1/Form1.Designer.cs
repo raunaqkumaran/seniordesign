@@ -28,61 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.staticBalanceButton = new System.Windows.Forms.Button();
             this.dynamicBalanceButton = new System.Windows.Forms.Button();
-            this.accelerometerScatter = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.comLocation = new System.Windows.Forms.Label();
             this.offsetLabel = new System.Windows.Forms.Label();
-            this.counterBalanceWeight = new System.Windows.Forms.TextBox();
             this.weightLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.accelerometerScatter)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.weightSelectionBox = new System.Windows.Forms.NumericUpDown();
+            this.omegaBox = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).BeginInit();
             this.SuspendLayout();
             // 
             // staticBalanceButton
             // 
-            this.staticBalanceButton.Location = new System.Drawing.Point(35, 144);
+            this.staticBalanceButton.Location = new System.Drawing.Point(19, 78);
+            this.staticBalanceButton.Margin = new System.Windows.Forms.Padding(2);
             this.staticBalanceButton.Name = "staticBalanceButton";
-            this.staticBalanceButton.Size = new System.Drawing.Size(320, 46);
+            this.staticBalanceButton.Size = new System.Drawing.Size(175, 25);
             this.staticBalanceButton.TabIndex = 1;
-            this.staticBalanceButton.Text = "Start static balancing";
+            this.staticBalanceButton.Text = "Run static";
             this.staticBalanceButton.UseVisualStyleBackColor = true;
-            this.staticBalanceButton.Click += new System.EventHandler(this.button2_Click);
+            this.staticBalanceButton.Click += new System.EventHandler(this.startStaticButton);
             // 
             // dynamicBalanceButton
             // 
-            this.dynamicBalanceButton.Location = new System.Drawing.Point(35, 315);
+            this.dynamicBalanceButton.Location = new System.Drawing.Point(19, 171);
+            this.dynamicBalanceButton.Margin = new System.Windows.Forms.Padding(2);
             this.dynamicBalanceButton.Name = "dynamicBalanceButton";
-            this.dynamicBalanceButton.Size = new System.Drawing.Size(320, 46);
+            this.dynamicBalanceButton.Size = new System.Drawing.Size(175, 25);
             this.dynamicBalanceButton.TabIndex = 2;
             this.dynamicBalanceButton.Text = "Start dynamic balancing";
             this.dynamicBalanceButton.UseVisualStyleBackColor = true;
-            this.dynamicBalanceButton.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // accelerometerScatter
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.accelerometerScatter.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.accelerometerScatter.Legends.Add(legend1);
-            this.accelerometerScatter.Location = new System.Drawing.Point(472, 47);
-            this.accelerometerScatter.Name = "accelerometerScatter";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.accelerometerScatter.Series.Add(series1);
-            this.accelerometerScatter.Size = new System.Drawing.Size(851, 550);
-            this.accelerometerScatter.TabIndex = 3;
-            this.accelerometerScatter.Text = "chart1";
+            this.dynamicBalanceButton.Click += new System.EventHandler(this.startDynamicButton);
             // 
             // comLocation
             // 
             this.comLocation.AutoSize = true;
-            this.comLocation.Location = new System.Drawing.Point(66, 545);
+            this.comLocation.Location = new System.Drawing.Point(239, 84);
+            this.comLocation.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.comLocation.Name = "comLocation";
-            this.comLocation.Size = new System.Drawing.Size(275, 25);
+            this.comLocation.Size = new System.Drawing.Size(149, 13);
             this.comLocation.TabIndex = 4;
             this.comLocation.Text = "Center of mass location: (N/A)";
             this.comLocation.Click += new System.EventHandler(this.label1_Click);
@@ -90,45 +78,95 @@
             // offsetLabel
             // 
             this.offsetLabel.AutoSize = true;
-            this.offsetLabel.Location = new System.Drawing.Point(66, 673);
+            this.offsetLabel.Location = new System.Drawing.Point(493, 84);
+            this.offsetLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.offsetLabel.Name = "offsetLabel";
-            this.offsetLabel.Size = new System.Drawing.Size(345, 25);
+            this.offsetLabel.Size = new System.Drawing.Size(191, 13);
             this.offsetLabel.TabIndex = 5;
             this.offsetLabel.Text = "Required counter balance offset: (N/A)";
             this.offsetLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // counterBalanceWeight
-            // 
-            this.counterBalanceWeight.Location = new System.Drawing.Point(336, 763);
-            this.counterBalanceWeight.Name = "counterBalanceWeight";
-            this.counterBalanceWeight.Size = new System.Drawing.Size(100, 29);
-            this.counterBalanceWeight.TabIndex = 6;
-            // 
             // weightLabel
             // 
             this.weightLabel.AutoSize = true;
-            this.weightLabel.Location = new System.Drawing.Point(71, 767);
+            this.weightLabel.Location = new System.Drawing.Point(16, 38);
+            this.weightLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.weightLabel.Name = "weightLabel";
-            this.weightLabel.Size = new System.Drawing.Size(259, 25);
+            this.weightLabel.Size = new System.Drawing.Size(139, 13);
             this.weightLabel.TabIndex = 7;
             this.weightLabel.Text = "Counter balance mass (kg): ";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(239, 177);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(145, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "(Plots in arduino IDE window)";
+            this.label1.Click += new System.EventHandler(this.label1_Click_2);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(19, 218);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(175, 25);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "End dynamic balancing";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.endDynamicButton);
+            // 
+            // weightSelectionBox
+            // 
+            this.weightSelectionBox.DecimalPlaces = 2;
+            this.weightSelectionBox.Location = new System.Drawing.Point(160, 36);
+            this.weightSelectionBox.Name = "weightSelectionBox";
+            this.weightSelectionBox.Size = new System.Drawing.Size(120, 20);
+            this.weightSelectionBox.TabIndex = 11;
+            this.weightSelectionBox.ValueChanged += new System.EventHandler(this.weightSelectionBox_ValueChanged);
+            // 
+            // omegaBox
+            // 
+            this.omegaBox.DecimalPlaces = 2;
+            this.omegaBox.Location = new System.Drawing.Point(160, 139);
+            this.omegaBox.Name = "omegaBox";
+            this.omegaBox.Size = new System.Drawing.Size(120, 20);
+            this.omegaBox.TabIndex = 13;
+            this.omegaBox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 141);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(105, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Rotation rate (rad/s):";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1351, 1043);
+            this.ClientSize = new System.Drawing.Size(737, 565);
+            this.Controls.Add(this.omegaBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.weightSelectionBox);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.weightLabel);
-            this.Controls.Add(this.counterBalanceWeight);
             this.Controls.Add(this.offsetLabel);
             this.Controls.Add(this.comLocation);
-            this.Controls.Add(this.accelerometerScatter);
             this.Controls.Add(this.dynamicBalanceButton);
             this.Controls.Add(this.staticBalanceButton);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.accelerometerScatter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -137,11 +175,14 @@
         #endregion
         private System.Windows.Forms.Button staticBalanceButton;
         private System.Windows.Forms.Button dynamicBalanceButton;
-        private System.Windows.Forms.DataVisualization.Charting.Chart accelerometerScatter;
         private System.Windows.Forms.Label comLocation;
         private System.Windows.Forms.Label offsetLabel;
-        private System.Windows.Forms.TextBox counterBalanceWeight;
         private System.Windows.Forms.Label weightLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.NumericUpDown weightSelectionBox;
+        private System.Windows.Forms.NumericUpDown omegaBox;
+        private System.Windows.Forms.Label label2;
     }
 }
 
