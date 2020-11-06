@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -34,34 +30,30 @@ namespace WindowsFormsApp1
             arduinoPort.WriteLine("START_STATIC");
             double value = Decimal.ToDouble(weightSelectionBox.Value);
             arduinoPort.WriteLine(value.ToString());
-            System.Threading.Thread.Sleep(MillisecondsTimeout);
             String result = arduinoPort.ReadLine();
             comLocation.Text = "Center of mass location: " + result;
             System.Threading.Thread.Sleep(SmallTimeout);
-            result = arduinoPort.ReadLine();
             offsetLabel.Text = "Required counter balance offset: " + result;
-            arduinoPort.Close();
-        }
-
-        private void endStaticButton(object sender, EventArgs e)
-        {
-            arduinoPort.Open();
-            arduinoPort.WriteLine("END_STATIC");
             arduinoPort.Close();
         }
 
         private async void startDynamicButton(object sender, EventArgs e)
         {
             arduinoPort.Open();
+            staticBalanceButton.Enabled = false;
+            dynamicBalanceButton.Enabled = false;
             arduinoPort.WriteLine("START_DYNAMIC");
             arduinoPort.WriteLine(omegaBox.Value.ToString());
-            Boolean end = true;
+            loopStop = false;
             await printDynamic();
             
         }
 
         private Task printDynamic()
         {
+            List<double> rotationRadiusList = new List<double>();
+            List<double> correctionMomentList = new List<double>();
+
             return Task.Run(() =>
             {
                 while (!loopStop)
@@ -76,12 +68,26 @@ namespace WindowsFormsApp1
                     if (val.StartsWith("R"))
                     {
                         val.Remove(0, 1);
-                        rotationRadius.Text = val;
+                        double value = Convert.ToDouble(val);
+                        if (rotationRadiusList.Count > 100)
+                        {
+                            rotationRadiusList.RemoveAt(0);
+                        }
+                        rotationRadiusList.Add(value);
+                        double average = rotationRadiusList.Average();
+                        rotationRadius.Text = "Radius of rotation: " + average.ToString();
                     }
                     if (val.StartsWith("C"))
                     {
                         val.Remove(0, 1);
-                        correctionMoment.Text = val;
+                        double value = Convert.ToDouble(val);
+                        if (correctionMomentList.Count > 100)
+                        {
+                            correctionMomentList.RemoveAt(0);
+                        }
+                        correctionMomentList.Add(value);
+                        double average = correctionMomentList.Average();
+                        correctionMoment.Text = "Correction moment: " + average.ToString();
                     }
                 }
             });
@@ -90,6 +96,8 @@ namespace WindowsFormsApp1
         private void endDynamicButton(object sender, EventArgs e)
         {
             loopStop = true;
+            staticBalanceButton.Enabled = true;
+            dynamicBalanceButton.Enabled = true;
             arduinoPort.WriteLine("END_DYNAMIC");
             arduinoPort.Close();
         }

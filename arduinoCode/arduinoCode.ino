@@ -121,6 +121,10 @@ void staticBalancing() {
     com = comLocation(forces, locations, 4);
     printCoord(com, false, 0);
     coordinates correction = correctionMoment(totalForce, com);
+    if (counterWeight == 0)
+    {
+      counterWeight = 0.0001;
+    }
     Serial.print(correction.magnitude / counterWeight);
 }
 

@@ -52,6 +52,11 @@ coordinates comLocation(double* forces, coordinates* locations, int length)
 		zSum += loc.z * force;
 	}
 
+  if (totalForce == 0)
+  {
+    totalForce = 0.001;
+  }
+
 	com.x = xSum / totalForce;
 	com.y = ySum / totalForce;
 	com.z = zSum / totalForce;
@@ -63,6 +68,10 @@ coordinates comLocation(double* forces, coordinates* locations, int length)
 coordinates correctionMoment(double force, coordinates com)
 {
 	double magnitude = sqrt(pow(com.x, 2) + pow(com.y, 2) + pow(com.z, 2));
+  if (magnitude == 0)
+  {
+    magnitude = 0.001;
+  }
 	coordinates correction;
 	correction.x = -com.x / magnitude;
 	correction.y = -com.y / magnitude;
@@ -82,6 +91,10 @@ double sumArr(double* arr, int length)
 
 double radiusOfRotation(double omega, double acceleration)
 {
+  if (omega == 0)
+  {
+    omega = 0.001;
+  }
 	double res = acceleration / pow(omega, 2);
 	return res;
 }
