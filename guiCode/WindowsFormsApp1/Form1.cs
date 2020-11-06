@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
+    //heres a comment
     public partial class Form1 : Form
     {
         private const int MillisecondsTimeout = 1200;
