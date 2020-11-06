@@ -15,6 +15,7 @@ namespace WindowsFormsApp1
     {
         private const int MillisecondsTimeout = 1200;
         private const int SmallTimeout = 100;
+        private Boolean loopStop = false;
         public SerialPort arduinoPort;
 
         public Form1()
@@ -35,10 +36,10 @@ namespace WindowsFormsApp1
             arduinoPort.WriteLine(value.ToString());
             System.Threading.Thread.Sleep(MillisecondsTimeout);
             String result = arduinoPort.ReadLine();
-            comLocation.Text = result;
+            comLocation.Text = "Center of mass location: " + result;
             System.Threading.Thread.Sleep(SmallTimeout);
             result = arduinoPort.ReadLine();
-            offsetLabel.Text = result;
+            offsetLabel.Text = "Required counter balance offset: " + result;
             arduinoPort.Close();
         }
 
@@ -49,15 +50,46 @@ namespace WindowsFormsApp1
             arduinoPort.Close();
         }
 
-        private void startDynamicButton(object sender, EventArgs e)
+        private async void startDynamicButton(object sender, EventArgs e)
         {
             arduinoPort.Open();
             arduinoPort.WriteLine("START_DYNAMIC");
             arduinoPort.WriteLine(omegaBox.Value.ToString());
+            Boolean end = true;
+            await printDynamic();
+            
+        }
+
+        private Task printDynamic()
+        {
+            return Task.Run(() =>
+            {
+                while (!loopStop)
+                {
+                    String val = "";
+                    try
+                    {
+                        val = arduinoPort.ReadLine();
+                    }
+                    catch
+                    { }
+                    if (val.StartsWith("R"))
+                    {
+                        val.Remove(0, 1);
+                        rotationRadius.Text = val;
+                    }
+                    if (val.StartsWith("C"))
+                    {
+                        val.Remove(0, 1);
+                        correctionMoment.Text = val;
+                    }
+                }
+            });
         }
 
         private void endDynamicButton(object sender, EventArgs e)
         {
+            loopStop = true;
             arduinoPort.WriteLine("END_DYNAMIC");
             arduinoPort.Close();
         }
@@ -98,6 +130,11 @@ namespace WindowsFormsApp1
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_3(object sender, EventArgs e)
         {
 
         }

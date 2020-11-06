@@ -166,9 +166,9 @@ double dynamicMoment(double omega) {
     double momentMagnitude = correction.magnitude;
     //Serial.print("\nDynamic moment: ");
     if (correction.x > 0)
-        Serial.print(-momentMagnitude);
+        Serial.println("C"+String(-momentMagnitude));
     else
-        Serial.print(momentMagnitude);
+        Serial.println("C"+String(momentMagnitude));
     sensors_event_t event;
     lis.getEvent(&event);
     //Serial.print("\nRadius of rotation: ");
@@ -177,7 +177,7 @@ double dynamicMoment(double omega) {
 
 void dynamicBalancing(sensors_event_t event, double omega) {
     double radius = radiusOfRotation(omega, event.acceleration.x);
-    Serial.print(radius);
+    Serial.println("R"+String(radius));
 }
 
 double getLoading(HX711 scale) {

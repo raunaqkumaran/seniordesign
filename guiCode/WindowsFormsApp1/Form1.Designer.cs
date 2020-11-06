@@ -33,11 +33,12 @@
             this.comLocation = new System.Windows.Forms.Label();
             this.offsetLabel = new System.Windows.Forms.Label();
             this.weightLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.correctionMoment = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.weightSelectionBox = new System.Windows.Forms.NumericUpDown();
             this.omegaBox = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.rotationRadius = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).BeginInit();
             this.SuspendLayout();
@@ -96,15 +97,15 @@
             this.weightLabel.TabIndex = 7;
             this.weightLabel.Text = "Counter balance mass (kg): ";
             // 
-            // label1
+            // correctionMoment
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(239, 177);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(145, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "(Plots in arduino IDE window)";
-            this.label1.Click += new System.EventHandler(this.label1_Click_2);
+            this.correctionMoment.AutoSize = true;
+            this.correctionMoment.Location = new System.Drawing.Point(239, 177);
+            this.correctionMoment.Name = "correctionMoment";
+            this.correctionMoment.Size = new System.Drawing.Size(101, 13);
+            this.correctionMoment.TabIndex = 8;
+            this.correctionMoment.Text = "Correction moment: ";
+            this.correctionMoment.Click += new System.EventHandler(this.label1_Click_2);
             // 
             // button2
             // 
@@ -146,16 +147,27 @@
             this.label2.Text = "Rotation rate (rad/s):";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
+            // rotationRadius
+            // 
+            this.rotationRadius.AutoSize = true;
+            this.rotationRadius.Location = new System.Drawing.Point(239, 230);
+            this.rotationRadius.Name = "rotationRadius";
+            this.rotationRadius.Size = new System.Drawing.Size(96, 13);
+            this.rotationRadius.TabIndex = 14;
+            this.rotationRadius.Text = "Radius of rotation: ";
+            this.rotationRadius.Click += new System.EventHandler(this.label1_Click_3);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(737, 565);
+            this.Controls.Add(this.rotationRadius);
             this.Controls.Add(this.omegaBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.weightSelectionBox);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.correctionMoment);
             this.Controls.Add(this.weightLabel);
             this.Controls.Add(this.offsetLabel);
             this.Controls.Add(this.comLocation);
@@ -178,11 +190,12 @@
         private System.Windows.Forms.Label comLocation;
         private System.Windows.Forms.Label offsetLabel;
         private System.Windows.Forms.Label weightLabel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label correctionMoment;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown weightSelectionBox;
         private System.Windows.Forms.NumericUpDown omegaBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label rotationRadius;
     }
 }
 
