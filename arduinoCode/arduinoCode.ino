@@ -113,14 +113,14 @@ String readString()
 
 void staticBalancing() {
     counterWeight = readString().toDouble();
-    forces[0] = getLoading(loadCell_1);
-    forces[1] = getLoading(loadCell_2);
-    forces[2] = getLoading(loadCell_3);
-    forces[3] = getLoading(loadCell_4);
+    forces[0] = getLoading(loadCell_1, 15);
+    forces[1] = getLoading(loadCell_2, 15);
+    forces[2] = getLoading(loadCell_3, 15);
+    forces[3] = getLoading(loadCell_4, 15);
     totalForce = sumArr(forces, 4);
     com = comLocation(forces, locations, 4);
     printCoord(com, false, 0);
-    coordinates correction = correctionMoment(totalForce, com);
+    coordinates correction = correctionMoment(totalForce, com);   //Calculates the required correction to maintain a CoM at 0,0,0
     if (counterWeight == 0)
     {
       counterWeight = 0.0001;
@@ -158,12 +158,17 @@ void printAccelerometer(sensors_event_t event) {
 
 }
 
+double getLoading(HX711 scale, int samples) {
+    double reading = scale.get_units(samples);
+    return reading;
+}
+
 double dynamicMoment(double omega) {
     double forces[3];
-    forces[0] = getLoading(loadCell_1);
-    forces[1] = getLoading(loadCell_2);
-    forces[2] = getLoading(loadCell_3);
-    forces[3] = getLoading(loadCell_4);
+    forces[0] = getLoading(loadCell_1, 1);
+    forces[1] = getLoading(loadCell_2, 1);
+    forces[2] = getLoading(loadCell_3, 1);
+    forces[3] = getLoading(loadCell_4, 1);
     double totalForce = sumArr(forces, 4);
     coordinates com = comLocation(forces, locations, 4);
     coordinates correction = correctionMoment(totalForce, com);
@@ -184,11 +189,6 @@ void dynamicBalancing(sensors_event_t event, double omega) {
     Serial.println("R"+String(radius));
 }
 
-double getLoading(HX711 scale) {
-    double reading = scale.get_units(15);
-    return reading;
-}
-
 void printCoord(coordinates coord, boolean mag, double counterWeight) {
     String str;
     //Serial.print("\nx: "); Serial.print(coord.x); Serial.print("\ty: "); Serial.print(coord.y); Serial.print("\tz: "); Serial.print(coord.z);
@@ -202,7 +202,7 @@ void printCoord(coordinates coord, boolean mag, double counterWeight) {
 }
 
 //Should be able to ignore this whole function. Here for posterity.
-
+/*
 void loop2() {
     // put your main code here, to run repeatedly:
     sensors_event_t event;
@@ -240,3 +240,4 @@ void loop2() {
     }
     delay(100);
 }
+*/
