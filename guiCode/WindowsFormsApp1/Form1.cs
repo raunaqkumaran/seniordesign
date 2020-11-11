@@ -21,8 +21,7 @@ namespace WindowsFormsApp1
             arduinoPort = new SerialPort();
             arduinoPort.BaudRate = 9600;
             arduinoPort.PortName = "COM4";
-            arduinoPort.Open();
-            arduinoPort.Close();
+            Console.WriteLine("STARTING");
         }
 
         private void startStaticButton(object sender, EventArgs e)
