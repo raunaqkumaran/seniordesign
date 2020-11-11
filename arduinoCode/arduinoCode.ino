@@ -8,37 +8,37 @@
 #include <Adafruit_LIS3DH.h>
 #include <Adafruit_Sensor.h>
 
-#define LIS3DH_CLK 13
-#define LIS3DH_MISO 12
-#define LIS3DH_MOSI 11
-#define LIS3DH_CS 10
+#define LIS3DH_CLK 22
+#define LIS3DH_MISO 24
+#define LIS3DH_MOSI 26
+#define LIS3DH_CS 28
 Adafruit_LIS3DH lis = Adafruit_LIS3DH(LIS3DH_CS, LIS3DH_MOSI, LIS3DH_MISO, LIS3DH_CLK);
 
 double totalForce; //Sum of all forces
 double counterWeight = 5; //Weight of counterweight (Units don't matter here, just be consistent)
 
 //Parameters for load cell 1
-int DOUT = 2;
-int CLK = 3;
+int DOUT = 14;
+int CLK = 15;
 double location1[] = {5, 0, 0};
 coordinates scale1;
 
 //Parameters for load cell 2
-int DOUT2 = 6;
-int CLK2 = 7;
+int DOUT2 = 16;
+int CLK2 = 17;
 double location2[] = {-5, 0, 0};
 coordinates scale2;
 
 //Parameters for load cell 3
-int DOUT3 = 13;
-int CLK3 = 14;
-double location3[] = {-5, 0, 0};
+int DOUT3 = 18;
+int CLK3 = 19;
+double location3[] = {5, 1, 0};
 coordinates scale3;
 
 //Parameters for load cell 4
-int DOUT4 = 18;
-int CLK4 = 19;
-double location4[] = {-5, 0, 0};
+int DOUT4 = 20;
+int CLK4 = 21;
+double location4[] = {-5, 1, 0};
 coordinates scale4;
 
 coordinates correction;
@@ -48,14 +48,14 @@ coordinates locations[] = {coordFromArray(location1), coordFromArray(location2),
 double omega;
 
 HX711 loadCell_1, loadCell_2, loadCell_3, loadCell_4;
-double calibration_1 = 1100;
-double calibration_2 = 1089;
-double calibration_3 = 1200;
-double calibration_4 = 1500;
-double offset1 = 100;
-double offset2 = 100;
-double offset3 = 100;
-double offset4 = 100;
+double calibration_1 = 145000;
+double calibration_2 = 145000;
+double calibration_3 = 145000;
+double calibration_4 = 145000;
+double offset1 = 7840;
+double offset2 = 7840;
+double offset3 = 7840;
+double offset4 = 7840;
 double sampleTime = 0.5;
 coordinates com;
 
@@ -75,17 +75,17 @@ void setup() {
 void initializeAccelerometer(Adafruit_LIS3DH &lis) {
     while (!Serial) delay(10);     // will pause Zero, Leonardo, etc until serial console opens
 
-    Serial.println("LIS3DH test!");
+    //Serial.println("LIS3DH test!");
 
     if (!lis.begin(0x18)) {   // change this to 0x19 for alternative i2c address
-        Serial.println("Couldnt start");
+        Serial.println("Couldn't start");
         while (1) yield();
     }
-    Serial.println("LIS3DH found!");
+    //Serial.println("LIS3DH found!");
 
-    Serial.print("Range = ");
-    Serial.print(2 << lis.getRange());
-    Serial.println("G");
+    //Serial.print("Range = ");
+    //Serial.print(2 << lis.getRange());
+    //Serial.println("G");
     lis.getDataRate();
 }
 
@@ -106,6 +106,7 @@ String readString()
                 break;
             }
             readString += temp;
+            delay(10);
         }
     }
     return readString;
@@ -133,6 +134,8 @@ void loop() {
     lis.getEvent(&event);
 
     String readstring = readString();
+    if (readstring.length() > 0)
+      //Serial.println(readstring);
         if (readstring == "START_STATIC") {
             staticBalancing();
         }

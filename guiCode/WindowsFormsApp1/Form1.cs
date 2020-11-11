@@ -63,12 +63,13 @@ namespace WindowsFormsApp1
                     try
                     {
                         val = arduinoPort.ReadLine();
+                        val = val.Replace("\n", "").Replace("\r", "");
                     }
                     catch
                     { }
                     if (val.StartsWith("R"))
                     {
-                        val.Remove(0, 1);
+                        val =  val.Remove(0, 1);
                         double value = Convert.ToDouble(val);
                         if (rotationRadiusList.Count > 100)
                         {
@@ -80,7 +81,7 @@ namespace WindowsFormsApp1
                     }
                     if (val.StartsWith("C"))
                     {
-                        val.Remove(0, 1);
+                        val = val.Remove(0, 1);
                         double value = Convert.ToDouble(val);
                         if (correctionMomentList.Count > 100)
                         {
