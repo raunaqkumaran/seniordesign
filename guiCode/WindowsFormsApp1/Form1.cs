@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,7 +77,10 @@ namespace WindowsFormsApp1
                         }
                         rotationRadiusList.Add(value);
                         double average = rotationRadiusList.Average();
-                        rotationRadius.Text = "Radius of rotation: " + average.ToString();
+                        rotationRadius.Invoke((MethodInvoker)delegate
+                        {
+                            rotationRadius.Text = "Radius of rotation: " + average.ToString();
+                        });
                     }
                     if (val.StartsWith("C"))
                     {
@@ -88,7 +92,10 @@ namespace WindowsFormsApp1
                         }
                         correctionMomentList.Add(value);
                         double average = correctionMomentList.Average();
-                        correctionMoment.Text = "Correction moment: " + average.ToString();
+                        correctionMoment.Invoke((MethodInvoker)delegate
+                        {
+                            correctionMoment.Text = "Correction moment: " + average.ToString();
+                        });
                     }
                 }
             });
