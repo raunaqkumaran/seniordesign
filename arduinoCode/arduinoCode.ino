@@ -7,6 +7,7 @@
 #include <String.h>
 #include <Adafruit_LIS3DH.h>
 #include <Adafruit_Sensor.h>
+#include <SoftwareSerial.h>
 
 #define LIS3DH_CLK 22
 #define LIS3DH_MISO 24
@@ -112,8 +113,7 @@ String readString()
     return readString;
 }
 
-void staticBalancing() {
-    counterWeight = readString().toDouble();
+void staticBalancing(double counterWeight) {
     forces[0] = getLoading(loadCell_1, 15);
     forces[1] = getLoading(loadCell_2, 15);
     forces[2] = getLoading(loadCell_3, 15);
@@ -126,7 +126,7 @@ void staticBalancing() {
     {
       counterWeight = 0.0001;
     }
-    Serial.print(correction.magnitude / counterWeight);
+    Serial.print(correction.magnitude / counterWeight); Serial.print("\n");
 }
 
 void loop() {
@@ -137,13 +137,17 @@ void loop() {
     if (readstring.length() > 0)
       //Serial.println(readstring);
         if (readstring == "START_STATIC") {
-            staticBalancing();
+            counterWeight = readString().toDouble();
+            staticBalancing(counterWeight);
+            Serial.flush();
         }
         if (readstring == "START_DYNAMIC") {
             omega = readString().toDouble();
+            counterWeight = readString().toDouble();
             do {
                 dynamicMoment(omega);
             }while(readString() != "END_DYNAMIC");
+            Serial.flush();
         }
     }
 
@@ -166,8 +170,13 @@ double getLoading(HX711 scale, int samples) {
     return reading;
 }
 
-double dynamicMoment(double omega) {
+double dynamicMoment(double omega, double counterWeight) {
     double forces[3];
+    delay(10);
+    if (counterWeight == 0)
+    {
+      counterWeight = 0.001;
+    }
     forces[0] = getLoading(loadCell_1, 1);
     forces[1] = getLoading(loadCell_2, 1);
     forces[2] = getLoading(loadCell_3, 1);
@@ -178,9 +187,9 @@ double dynamicMoment(double omega) {
     double momentMagnitude = correction.magnitude;
     //Serial.print("\nDynamic moment: ");
     if (correction.x > 0)
-        Serial.println("C"+String(-momentMagnitude));
+        Serial.println("C"+String(-momentMagnitude / counterWeight));
     else
-        Serial.println("C"+String(momentMagnitude));
+        Serial.println("C"+String(momentMagnitude / counterWeight));
     sensors_event_t event;
     lis.getEvent(&event);
     //Serial.print("\nRadius of rotation: ");
