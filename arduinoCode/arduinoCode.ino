@@ -145,7 +145,7 @@ void loop() {
             omega = readString().toDouble();
             counterWeight = readString().toDouble();
             do {
-                dynamicMoment(omega);
+                dynamicMoment(omega, counterWeight);
             }while(readString() != "END_DYNAMIC");
             Serial.flush();
         }
