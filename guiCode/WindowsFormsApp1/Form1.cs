@@ -175,5 +175,15 @@ namespace WindowsFormsApp1
         {
 
         }
+
+        private void label1_Click_4(object sender, EventArgs e)
+        {
+
+        }
+
+        private void portBox(object sender, EventArgs e)
+        {
+            arduinoPort.PortName = "COM" + portSelector.Value.ToString();
+        }
     }
 }

@@ -39,14 +39,17 @@
             this.omegaBox = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.rotationRadius = new System.Windows.Forms.Label();
+            this.portSelector = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.portSelector)).BeginInit();
             this.SuspendLayout();
             // 
             // staticBalanceButton
             // 
             this.staticBalanceButton.Location = new System.Drawing.Point(35, 144);
-            this.staticBalanceButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.staticBalanceButton.Margin = new System.Windows.Forms.Padding(4);
             this.staticBalanceButton.Name = "staticBalanceButton";
             this.staticBalanceButton.Size = new System.Drawing.Size(321, 46);
             this.staticBalanceButton.TabIndex = 1;
@@ -57,7 +60,7 @@
             // dynamicBalanceButton
             // 
             this.dynamicBalanceButton.Location = new System.Drawing.Point(35, 316);
-            this.dynamicBalanceButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dynamicBalanceButton.Margin = new System.Windows.Forms.Padding(4);
             this.dynamicBalanceButton.Name = "dynamicBalanceButton";
             this.dynamicBalanceButton.Size = new System.Drawing.Size(321, 46);
             this.dynamicBalanceButton.TabIndex = 2;
@@ -111,7 +114,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(35, 402);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(321, 46);
             this.button2.TabIndex = 10;
@@ -123,7 +126,7 @@
             // 
             this.weightSelectionBox.DecimalPlaces = 2;
             this.weightSelectionBox.Location = new System.Drawing.Point(293, 66);
-            this.weightSelectionBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.weightSelectionBox.Margin = new System.Windows.Forms.Padding(6);
             this.weightSelectionBox.Name = "weightSelectionBox";
             this.weightSelectionBox.Size = new System.Drawing.Size(220, 29);
             this.weightSelectionBox.TabIndex = 11;
@@ -133,7 +136,7 @@
             // 
             this.omegaBox.DecimalPlaces = 2;
             this.omegaBox.Location = new System.Drawing.Point(293, 257);
-            this.omegaBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.omegaBox.Margin = new System.Windows.Forms.Padding(6);
             this.omegaBox.Name = "omegaBox";
             this.omegaBox.Size = new System.Drawing.Size(220, 29);
             this.omegaBox.TabIndex = 13;
@@ -161,11 +164,48 @@
             this.rotationRadius.Text = "Radius of rotation (m): ";
             this.rotationRadius.Click += new System.EventHandler(this.label1_Click_3);
             // 
+            // portSelector
+            // 
+            this.portSelector.Location = new System.Drawing.Point(1062, 64);
+            this.portSelector.Margin = new System.Windows.Forms.Padding(6);
+            this.portSelector.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.portSelector.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.portSelector.Name = "portSelector";
+            this.portSelector.Size = new System.Drawing.Size(220, 29);
+            this.portSelector.TabIndex = 16;
+            this.portSelector.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.portSelector.ValueChanged += new System.EventHandler(this.portBox);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(904, 66);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 25);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "COM Port:";
+            this.label1.Click += new System.EventHandler(this.label1_Click_4);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1351, 1043);
+            this.Controls.Add(this.portSelector);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.rotationRadius);
             this.Controls.Add(this.omegaBox);
             this.Controls.Add(this.label2);
@@ -177,12 +217,13 @@
             this.Controls.Add(this.comLocation);
             this.Controls.Add(this.dynamicBalanceButton);
             this.Controls.Add(this.staticBalanceButton);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.portSelector)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -200,6 +241,8 @@
         private System.Windows.Forms.NumericUpDown omegaBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label rotationRadius;
+        private System.Windows.Forms.NumericUpDown portSelector;
+        private System.Windows.Forms.Label label1;
     }
 }
 
