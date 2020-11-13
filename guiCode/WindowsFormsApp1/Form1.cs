@@ -28,24 +28,33 @@ namespace WindowsFormsApp1
         private void startStaticButton(object sender, EventArgs e)
         {
             arduinoPort.Open();
+            arduinoPort.DiscardInBuffer();
+            arduinoPort.DiscardOutBuffer();
             arduinoPort.WriteLine("START_STATIC");
-            double value = Decimal.ToDouble(weightSelectionBox.Value);
+            double value = Decimal.ToDouble(weightSelectionBox.Value) * 9.81;
             arduinoPort.WriteLine(value.ToString());
             String result = arduinoPort.ReadLine();
-            comLocation.Text = "Center of mass location: " + result;
+            comLocation.Text = "Center of mass location (m): " + result;
             System.Threading.Thread.Sleep(SmallTimeout);
-            offsetLabel.Text = "Required counter balance offset: " + result;
+            result = arduinoPort.ReadLine();
+            offsetLabel.Text = "Required counter balance offset (m): " + result;
             arduinoPort.Close();
         }
 
         private async void startDynamicButton(object sender, EventArgs e)
         {
             arduinoPort.Open();
+            arduinoPort.DiscardInBuffer();
+            arduinoPort.DiscardOutBuffer();
             staticBalanceButton.Enabled = false;
             dynamicBalanceButton.Enabled = false;
+            omegaBox.Enabled = false;
+            weightSelectionBox.Enabled = false;
             arduinoPort.WriteLine("START_DYNAMIC");
             arduinoPort.WriteLine(omegaBox.Value.ToString());
             loopStop = false;
+            double counterWeight = Decimal.ToDouble(weightSelectionBox.Value) * 9.81;
+            arduinoPort.WriteLine(counterWeight.ToString());
             await printDynamic();
             
         }
@@ -66,7 +75,9 @@ namespace WindowsFormsApp1
                         val = val.Replace("\n", "").Replace("\r", "");
                     }
                     catch
-                    { }
+                    {
+                        Console.WriteLine("Found something");
+                    }
                     if (val.StartsWith("R"))
                     {
                         val =  val.Remove(0, 1);
@@ -77,9 +88,10 @@ namespace WindowsFormsApp1
                         }
                         rotationRadiusList.Add(value);
                         double average = rotationRadiusList.Average();
+                        average = Math.Round(average, 3);
                         rotationRadius.Invoke((MethodInvoker)delegate
                         {
-                            rotationRadius.Text = "Radius of rotation: " + average.ToString();
+                            rotationRadius.Text = "Radius of rotation (m): " + average.ToString();
                         });
                     }
                     if (val.StartsWith("C"))
@@ -92,12 +104,14 @@ namespace WindowsFormsApp1
                         }
                         correctionMomentList.Add(value);
                         double average = correctionMomentList.Average();
+                        average = Math.Round(average, 3);
                         correctionMoment.Invoke((MethodInvoker)delegate
                         {
-                            correctionMoment.Text = "Correction moment: " + average.ToString();
+                            correctionMoment.Text = "Counterbalance correction (m): " + average.ToString();
                         });
                     }
                 }
+                arduinoPort.Close();
             });
         }
 
@@ -106,8 +120,15 @@ namespace WindowsFormsApp1
             loopStop = true;
             staticBalanceButton.Enabled = true;
             dynamicBalanceButton.Enabled = true;
-            arduinoPort.WriteLine("END_DYNAMIC");
-            arduinoPort.Close();
+            weightSelectionBox.Enabled = true;
+            omegaBox.Enabled = true;
+
+            if (arduinoPort.IsOpen)
+            {
+                arduinoPort.WriteLine("END_DYNAMIC");
+                arduinoPort.DiscardInBuffer();
+                arduinoPort.DiscardOutBuffer();
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
