@@ -1,0 +1,131 @@
+cmake_minimum_required(VERSION 3.17)
+project(arduinoLibrary)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(arduinoCode)
+include_directories(Libraries/Adafruit_BusIO)
+include_directories(Libraries/Adafruit_BusIO/examples)
+include_directories(Libraries/Adafruit_BusIO/examples/i2c_address_detect)
+include_directories(Libraries/Adafruit_BusIO/examples/i2c_readwrite)
+include_directories(Libraries/Adafruit_BusIO/examples/i2c_registers)
+include_directories(Libraries/Adafruit_BusIO/examples/i2corspi_register)
+include_directories(Libraries/Adafruit_BusIO/examples/spi_modetest)
+include_directories(Libraries/Adafruit_BusIO/examples/spi_readwrite)
+include_directories(Libraries/Adafruit_BusIO/examples/spi_register_bits)
+include_directories(Libraries/Adafruit_BusIO/examples/spi_registers)
+include_directories(Libraries/Adafruit_LIS3DH)
+include_directories(Libraries/Adafruit_LIS3DH/examples)
+include_directories(Libraries/Adafruit_LIS3DH/examples/acceldemo)
+include_directories(Libraries/Adafruit_LIS3DH/examples/adcdemo)
+include_directories(Libraries/Adafruit_LIS3DH/examples/tapdemo)
+include_directories(Libraries/Adafruit_Unified_Sensor)
+include_directories(Libraries/Adafruit_Unified_Sensor/examples)
+include_directories(Libraries/Adafruit_Unified_Sensor/examples/sensortest)
+include_directories(Libraries/EEPROM)
+include_directories(Libraries/EEPROM/examples)
+include_directories(Libraries/EEPROM/examples/eeprom_clear)
+include_directories(Libraries/EEPROM/examples/eeprom_crc)
+include_directories(Libraries/EEPROM/examples/eeprom_get)
+include_directories(Libraries/EEPROM/examples/eeprom_iteration)
+include_directories(Libraries/EEPROM/examples/eeprom_put)
+include_directories(Libraries/EEPROM/examples/eeprom_read)
+include_directories(Libraries/EEPROM/examples/eeprom_update)
+include_directories(Libraries/EEPROM/examples/eeprom_write)
+include_directories(Libraries/EEPROM/src)
+include_directories(Libraries/HID/src)
+include_directories(Libraries/HX711)
+include_directories(Libraries/HX711/examples)
+include_directories(Libraries/HX711/examples/HX_delta_scale)
+include_directories(Libraries/HX711/examples/HX_grocery_scale)
+include_directories(Libraries/HX711/examples/HX_kitchen_scale)
+include_directories(Libraries/HX711/examples/HX_performance)
+include_directories(Libraries/HX711/examples/HX_performance2)
+include_directories(Libraries/HX711/examples/HX_plotter)
+include_directories(Libraries/SoftwareSerial/examples)
+include_directories(Libraries/SoftwareSerial/examples/SoftwareSerialExample)
+include_directories(Libraries/SoftwareSerial/examples/TwoPortReceive)
+include_directories(Libraries/SoftwareSerial/src)
+include_directories(Libraries/SPI/examples)
+include_directories(Libraries/SPI/examples/BarometricPressureSensor)
+include_directories(Libraries/SPI/examples/DigitalPotControl)
+include_directories(Libraries/SPI/src)
+include_directories(Libraries/Wire/examples)
+include_directories(Libraries/Wire/examples/digital_potentiometer)
+include_directories(Libraries/Wire/examples/i2c_scanner)
+include_directories(Libraries/Wire/examples/master_reader)
+include_directories(Libraries/Wire/examples/master_writer)
+include_directories(Libraries/Wire/examples/SFRRanger_reader)
+include_directories(Libraries/Wire/examples/slave_receiver)
+include_directories(Libraries/Wire/examples/slave_sender)
+include_directories(Libraries/Wire/src)
+include_directories(Libraries/Wire/src/utility)
+include_directories(sampleCode)
+include_directories(sampleCode/accel_demo_modded)
+
+add_executable(arduinoLibrary
+        arduinoCode/arduinoCode.ino
+        arduinoCode/support.h
+        Libraries/Adafruit_BusIO/examples/i2c_address_detect/i2c_address_detect.ino
+        Libraries/Adafruit_BusIO/examples/i2c_readwrite/i2c_readwrite.ino
+        Libraries/Adafruit_BusIO/examples/i2c_registers/i2c_registers.ino
+        Libraries/Adafruit_BusIO/examples/i2corspi_register/i2corspi_register.ino
+        Libraries/Adafruit_BusIO/examples/spi_modetest/spi_modetest.ino
+        Libraries/Adafruit_BusIO/examples/spi_readwrite/spi_readwrite.ino
+        Libraries/Adafruit_BusIO/examples/spi_register_bits/spi_register_bits.ino
+        Libraries/Adafruit_BusIO/examples/spi_registers/spi_registers.ino
+        Libraries/Adafruit_BusIO/Adafruit_BusIO_Register.cpp
+        Libraries/Adafruit_BusIO/Adafruit_BusIO_Register.h
+        Libraries/Adafruit_BusIO/Adafruit_I2CDevice.cpp
+        Libraries/Adafruit_BusIO/Adafruit_I2CDevice.h
+        Libraries/Adafruit_BusIO/Adafruit_I2CRegister.h
+        Libraries/Adafruit_BusIO/Adafruit_SPIDevice.cpp
+        Libraries/Adafruit_BusIO/Adafruit_SPIDevice.h
+        Libraries/Adafruit_LIS3DH/examples/acceldemo/acceldemo.ino
+        Libraries/Adafruit_LIS3DH/examples/adcdemo/adcdemo.ino
+        Libraries/Adafruit_LIS3DH/examples/tapdemo/tapdemo.ino
+        Libraries/Adafruit_LIS3DH/Adafruit_LIS3DH.cpp
+        Libraries/Adafruit_LIS3DH/Adafruit_LIS3DH.h
+        Libraries/Adafruit_Unified_Sensor/examples/sensortest/sensortest.ino
+        Libraries/Adafruit_Unified_Sensor/Adafruit_Sensor.cpp
+        Libraries/Adafruit_Unified_Sensor/Adafruit_Sensor.h
+        Libraries/EEPROM/examples/eeprom_clear/eeprom_clear.ino
+        Libraries/EEPROM/examples/eeprom_crc/eeprom_crc.ino
+        Libraries/EEPROM/examples/eeprom_get/eeprom_get.ino
+        Libraries/EEPROM/examples/eeprom_iteration/eeprom_iteration.ino
+        Libraries/EEPROM/examples/eeprom_put/eeprom_put.ino
+        Libraries/EEPROM/examples/eeprom_read/eeprom_read.ino
+        Libraries/EEPROM/examples/eeprom_update/eeprom_update.ino
+        Libraries/EEPROM/examples/eeprom_write/eeprom_write.ino
+        Libraries/EEPROM/src/EEPROM.h
+        Libraries/HID/src/HID.cpp
+        Libraries/HID/src/HID.h
+        Libraries/HX711/examples/HX_delta_scale/HX_delta_scale.ino
+        Libraries/HX711/examples/HX_grocery_scale/HX_grocery_scale.ino
+        Libraries/HX711/examples/HX_kitchen_scale/HX_kitchen_scale.ino
+        Libraries/HX711/examples/HX_performance/HX_performance.ino
+        Libraries/HX711/examples/HX_performance2/HX_performance2.ino
+        Libraries/HX711/examples/HX_plotter/HX_plotter.ino
+        Libraries/HX711/HX711.cpp
+        Libraries/HX711/HX711.h
+        Libraries/SoftwareSerial/examples/SoftwareSerialExample/SoftwareSerialExample.ino
+        Libraries/SoftwareSerial/examples/TwoPortReceive/TwoPortReceive.ino
+        Libraries/SoftwareSerial/src/SoftwareSerial.cpp
+        Libraries/SoftwareSerial/src/SoftwareSerial.h
+        Libraries/SPI/examples/BarometricPressureSensor/BarometricPressureSensor.ino
+        Libraries/SPI/examples/DigitalPotControl/DigitalPotControl.ino
+        Libraries/SPI/src/SPI.cpp
+        Libraries/SPI/src/SPI.h
+        Libraries/Wire/examples/digital_potentiometer/digital_potentiometer.ino
+        Libraries/Wire/examples/i2c_scanner/i2c_scanner.ino
+        Libraries/Wire/examples/master_reader/master_reader.ino
+        Libraries/Wire/examples/master_writer/master_writer.ino
+        Libraries/Wire/examples/SFRRanger_reader/SFRRanger_reader.ino
+        Libraries/Wire/examples/slave_receiver/slave_receiver.ino
+        Libraries/Wire/examples/slave_sender/slave_sender.ino
+        Libraries/Wire/src/utility/twi.c
+        Libraries/Wire/src/utility/twi.h
+        Libraries/Wire/src/Wire.cpp
+        Libraries/Wire/src/Wire.h
+        sampleCode/accel_demo_modded/accel_demo_modded.ino
+        libTest.cpp)
