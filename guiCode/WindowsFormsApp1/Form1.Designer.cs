@@ -41,9 +41,32 @@
             this.rotationRadius = new System.Windows.Forms.Label();
             this.portSelector = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.Calibration1 = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Offset1 = new System.Windows.Forms.NumericUpDown();
+            this.Offset2 = new System.Windows.Forms.NumericUpDown();
+            this.Calibration2 = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Offset4 = new System.Windows.Forms.NumericUpDown();
+            this.Calibration4 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.Offset3 = new System.Windows.Forms.NumericUpDown();
+            this.Calibration3 = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.applyCalibration = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.portSelector)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration3)).BeginInit();
             this.SuspendLayout();
             // 
             // staticBalanceButton
@@ -199,11 +222,250 @@
             this.label1.Text = "COM Port:";
             this.label1.Click += new System.EventHandler(this.label1_Click_4);
             // 
+            // Calibration1
+            // 
+            this.Calibration1.DecimalPlaces = 2;
+            this.Calibration1.Location = new System.Drawing.Point(320, 741);
+            this.Calibration1.Margin = new System.Windows.Forms.Padding(6);
+            this.Calibration1.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Calibration1.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Calibration1.Name = "Calibration1";
+            this.Calibration1.Size = new System.Drawing.Size(220, 29);
+            this.Calibration1.TabIndex = 18;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(56, 745);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(111, 25);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Load Cell 1";
+            // 
+            // Offset1
+            // 
+            this.Offset1.DecimalPlaces = 2;
+            this.Offset1.Location = new System.Drawing.Point(570, 741);
+            this.Offset1.Margin = new System.Windows.Forms.Padding(6);
+            this.Offset1.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Offset1.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Offset1.Name = "Offset1";
+            this.Offset1.Size = new System.Drawing.Size(220, 29);
+            this.Offset1.TabIndex = 19;
+            // 
+            // Offset2
+            // 
+            this.Offset2.DecimalPlaces = 2;
+            this.Offset2.Location = new System.Drawing.Point(570, 791);
+            this.Offset2.Margin = new System.Windows.Forms.Padding(6);
+            this.Offset2.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Offset2.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Offset2.Name = "Offset2";
+            this.Offset2.Size = new System.Drawing.Size(220, 29);
+            this.Offset2.TabIndex = 22;
+            // 
+            // Calibration2
+            // 
+            this.Calibration2.DecimalPlaces = 2;
+            this.Calibration2.Location = new System.Drawing.Point(320, 791);
+            this.Calibration2.Margin = new System.Windows.Forms.Padding(6);
+            this.Calibration2.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Calibration2.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Calibration2.Name = "Calibration2";
+            this.Calibration2.Size = new System.Drawing.Size(220, 29);
+            this.Calibration2.TabIndex = 21;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(56, 795);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 25);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Load Cell 2";
+            // 
+            // Offset4
+            // 
+            this.Offset4.DecimalPlaces = 2;
+            this.Offset4.Location = new System.Drawing.Point(570, 889);
+            this.Offset4.Margin = new System.Windows.Forms.Padding(6);
+            this.Offset4.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Offset4.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Offset4.Name = "Offset4";
+            this.Offset4.Size = new System.Drawing.Size(220, 29);
+            this.Offset4.TabIndex = 28;
+            // 
+            // Calibration4
+            // 
+            this.Calibration4.DecimalPlaces = 2;
+            this.Calibration4.Location = new System.Drawing.Point(320, 889);
+            this.Calibration4.Margin = new System.Windows.Forms.Padding(6);
+            this.Calibration4.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Calibration4.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Calibration4.Name = "Calibration4";
+            this.Calibration4.Size = new System.Drawing.Size(220, 29);
+            this.Calibration4.TabIndex = 27;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(56, 893);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(111, 25);
+            this.label5.TabIndex = 26;
+            this.label5.Text = "Load Cell 4";
+            // 
+            // Offset3
+            // 
+            this.Offset3.DecimalPlaces = 2;
+            this.Offset3.Location = new System.Drawing.Point(570, 839);
+            this.Offset3.Margin = new System.Windows.Forms.Padding(6);
+            this.Offset3.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Offset3.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Offset3.Name = "Offset3";
+            this.Offset3.Size = new System.Drawing.Size(220, 29);
+            this.Offset3.TabIndex = 25;
+            // 
+            // Calibration3
+            // 
+            this.Calibration3.DecimalPlaces = 2;
+            this.Calibration3.Location = new System.Drawing.Point(320, 839);
+            this.Calibration3.Margin = new System.Windows.Forms.Padding(6);
+            this.Calibration3.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.Calibration3.Minimum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            -2147483648});
+            this.Calibration3.Name = "Calibration3";
+            this.Calibration3.Size = new System.Drawing.Size(220, 29);
+            this.Calibration3.TabIndex = 24;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(56, 843);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(111, 25);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Load Cell 3";
+            // 
+            // applyCalibration
+            // 
+            this.applyCalibration.Location = new System.Drawing.Point(61, 945);
+            this.applyCalibration.Margin = new System.Windows.Forms.Padding(4);
+            this.applyCalibration.Name = "applyCalibration";
+            this.applyCalibration.Size = new System.Drawing.Size(321, 46);
+            this.applyCalibration.TabIndex = 29;
+            this.applyCalibration.Text = "Apply calibration factors";
+            this.applyCalibration.UseVisualStyleBackColor = true;
+            this.applyCalibration.Click += new System.EventHandler(this.applyCalibration_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(315, 688);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(158, 25);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Calibration factor";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(567, 688);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(157, 25);
+            this.label8.TabIndex = 31;
+            this.label8.Text = "Calibration offset";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1351, 1043);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.applyCalibration);
+            this.Controls.Add(this.Offset4);
+            this.Controls.Add(this.Calibration4);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.Offset3);
+            this.Controls.Add(this.Calibration3);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.Offset2);
+            this.Controls.Add(this.Calibration2);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Offset1);
+            this.Controls.Add(this.Calibration1);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.portSelector);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rotationRadius);
@@ -224,6 +486,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.portSelector)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Offset3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Calibration3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,6 +513,21 @@
         private System.Windows.Forms.Label rotationRadius;
         private System.Windows.Forms.NumericUpDown portSelector;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown Calibration1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown Offset1;
+        private System.Windows.Forms.NumericUpDown Offset2;
+        private System.Windows.Forms.NumericUpDown Calibration2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown Offset4;
+        private System.Windows.Forms.NumericUpDown Calibration4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown Offset3;
+        private System.Windows.Forms.NumericUpDown Calibration3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button applyCalibration;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }
 

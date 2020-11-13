@@ -22,6 +22,8 @@ namespace WindowsFormsApp1
             arduinoPort = new SerialPort();
             arduinoPort.BaudRate = 9600;
             arduinoPort.PortName = "COM4";
+            Calibration1.Value = Calibration2.Value = Calibration3.Value = Calibration4.Value = 145000;
+            Offset1.Value = Offset2.Value = Offset3.Value = Offset4.Value = 7840;
             Console.WriteLine("STARTING");
         }
 
@@ -50,6 +52,7 @@ namespace WindowsFormsApp1
             dynamicBalanceButton.Enabled = false;
             omegaBox.Enabled = false;
             weightSelectionBox.Enabled = false;
+            applyCalibration.Enabled = false;
             arduinoPort.WriteLine("START_DYNAMIC");
             arduinoPort.WriteLine(omegaBox.Value.ToString());
             loopStop = false;
@@ -122,6 +125,7 @@ namespace WindowsFormsApp1
             dynamicBalanceButton.Enabled = true;
             weightSelectionBox.Enabled = true;
             omegaBox.Enabled = true;
+            applyCalibration.Enabled = true;
 
             if (arduinoPort.IsOpen)
             {
@@ -184,6 +188,27 @@ namespace WindowsFormsApp1
         private void portBox(object sender, EventArgs e)
         {
             arduinoPort.PortName = "COM" + portSelector.Value.ToString();
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void applyCalibration_Click(object sender, EventArgs e)
+        {
+            arduinoPort.Open();
+            arduinoPort.DiscardInBuffer(); arduinoPort.DiscardOutBuffer();
+            arduinoPort.WriteLine("RECALIBRATE");
+            arduinoPort.WriteLine(Calibration1.Value.ToString());
+            arduinoPort.WriteLine(Offset1.Value.ToString());
+            arduinoPort.WriteLine(Calibration2.Value.ToString());
+            arduinoPort.WriteLine(Offset2.Value.ToString());
+            arduinoPort.WriteLine(Calibration3.Value.ToString());
+            arduinoPort.WriteLine(Offset3.Value.ToString());
+            arduinoPort.WriteLine(Calibration4.Value.ToString());
+            arduinoPort.WriteLine(Offset4.Value.ToString());
+            arduinoPort.Close();
         }
     }
 }

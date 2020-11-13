@@ -149,6 +149,23 @@ void loop() {
             }while(readString() != "END_DYNAMIC");
             Serial.flush();
         }
+        if (readstring == "RECALIBRATE")
+        {
+          calibration_1 = readString().toDouble();
+          offset1 = readString().toDouble();
+          calibration_2 = readString().toDouble();
+          offset2 = readString().toDouble();
+          calibration_3 = readString().toDouble();
+          offset3 = readString().toDouble();
+          calibration_4 = readString().toDouble();
+          offset4 = readString().toDouble();
+          
+          setupScales(loadCell_1, DOUT, CLK, calibration_1, offset1);
+          setupScales(loadCell_2, DOUT2, CLK2, calibration_2, offset2);
+          setupScales(loadCell_3, DOUT3, CLK3, calibration_3, offset3);
+          setupScales(loadCell_4, DOUT4, CLK4, calibration_4, offset4);
+          Serial.flush();
+        }
     }
 
 void printAccelerometer(sensors_event_t event) {
