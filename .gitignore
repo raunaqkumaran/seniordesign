@@ -340,4 +340,5 @@ ASALocalRun/
 healthchecksdb
 
 # Extra stuff VS didn't include that I don't want 
+*.sln
 *.vcxproj*
