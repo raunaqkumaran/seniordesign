@@ -59,9 +59,11 @@ double offset3 = 7840;
 double offset4 = 7840;
 double sampleTime = 0.5;
 coordinates com;
+SoftwareSerial xbee(10, 11);
 
 void setup() {
     Serial.begin(9600);
+    xbee.begin(9600);
     initializeAccelerometer(lis);
     setupScales(loadCell_1, DOUT, CLK, calibration_1, offset1);
     scale1 = coordFromArray(location1);
@@ -80,6 +82,7 @@ void initializeAccelerometer(Adafruit_LIS3DH &lis) {
 
     if (!lis.begin(0x18)) {   // change this to 0x19 for alternative i2c address
         Serial.println("Couldn't start");
+        xbee.println("Couldn't start");
         while (1) yield();
     }
     //Serial.println("LIS3DH found!");
@@ -100,9 +103,9 @@ void setupScales(HX711 &loadCell, int dout, int clk, double calibrationFactor, d
 String readString()
 {
     String readString = "";
-    if (Serial.available()) {
-        while (Serial.available() > 0) {
-            char temp = Serial.read();
+    if (xbee.available()) {
+        while (xbee.available() > 0) {
+            char temp = xbee.read();
             if (temp == '\n') {
                 break;
             }
@@ -110,6 +113,7 @@ String readString()
             delay(10);
         }
     }
+    Serial.print(readString);
     return readString;
 }
 
@@ -126,6 +130,7 @@ void staticBalancing(double counterWeight) {
     {
       counterWeight = 0.0001;
     }
+    xbee.print(correction.magnitude / counterWeight); xbee.print("\n");
     Serial.print(correction.magnitude / counterWeight); Serial.print("\n");
 }
 
@@ -139,6 +144,7 @@ void loop() {
         if (readstring == "START_STATIC") {
             counterWeight = readString().toDouble();
             staticBalancing(counterWeight);
+            xbee.flush();
             Serial.flush();
         }
         if (readstring == "START_DYNAMIC") {
@@ -147,6 +153,7 @@ void loop() {
             do {
                 dynamicMoment(omega, counterWeight);
             }while(readString() != "END_DYNAMIC");
+            xbee.flush();
             Serial.flush();
         }
         if (readstring == "RECALIBRATE")
@@ -164,6 +171,7 @@ void loop() {
           setupScales(loadCell_2, DOUT2, CLK2, calibration_2, offset2);
           setupScales(loadCell_3, DOUT3, CLK3, calibration_3, offset3);
           setupScales(loadCell_4, DOUT4, CLK4, calibration_4, offset4);
+          xbee.flush();
           Serial.flush();
         }
     }
@@ -203,10 +211,14 @@ double dynamicMoment(double omega, double counterWeight) {
     coordinates correction = correctionMoment(totalForce, com);
     double momentMagnitude = correction.magnitude;
     //Serial.print("\nDynamic moment: ");
-    if (correction.x > 0)
+    if (correction.x > 0){
+        xbee.println("C"+String(-momentMagnitude / counterWeight));
         Serial.println("C"+String(-momentMagnitude / counterWeight));
-    else
+    }
+    else{
+        xbee.println("C"+String(momentMagnitude / counterWeight));
         Serial.println("C"+String(momentMagnitude / counterWeight));
+    }
     sensors_event_t event;
     lis.getEvent(&event);
     //Serial.print("\nRadius of rotation: ");
@@ -215,6 +227,7 @@ double dynamicMoment(double omega, double counterWeight) {
 
 void dynamicBalancing(sensors_event_t event, double omega) {
     double radius = radiusOfRotation(omega, event.acceleration.x);
+    xbee.println("R"+String(radius));
     Serial.println("R"+String(radius));
 }
 
@@ -227,6 +240,7 @@ void printCoord(coordinates coord, boolean mag, double counterWeight) {
     //Serial.print("\n");
     //Serial.print("COM_LOCATION");
     str = "x: " + String(coord.x);
+    xbee.println(str);
     Serial.println(str);
 }
 

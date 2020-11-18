@@ -21,7 +21,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
             arduinoPort = new SerialPort();
             arduinoPort.BaudRate = 9600;
-            arduinoPort.PortName = "COM4";
+            arduinoPort.PortName = "COM5";
             Calibration1.Value = Calibration2.Value = Calibration3.Value = Calibration4.Value = 145000;
             Offset1.Value = Offset2.Value = Offset3.Value = Offset4.Value = 7840;
             Console.WriteLine("STARTING");
