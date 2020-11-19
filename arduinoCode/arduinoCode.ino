@@ -9,6 +9,7 @@
 #include <Adafruit_Sensor.h>
 #include <SoftwareSerial.h>
 
+//Define pin numbers for the LIS3DH accelerometer
 #define LIS3DH_CLK 22
 #define LIS3DH_MISO 24
 #define LIS3DH_MOSI 26
@@ -21,25 +22,25 @@ double counterWeight = 5; //Weight of counterweight (Units don't matter here, ju
 //Parameters for load cell 1
 int DOUT = 14;
 int CLK = 15;
-double location1[] = {5, 0, 0};
+double location1[] = {-0.27305, -0.1651, 0};
 coordinates scale1;
 
 //Parameters for load cell 2
 int DOUT2 = 16;
 int CLK2 = 17;
-double location2[] = {-5, 0, 0};
+double location2[] = {-0.27305, 0.1651, 0};
 coordinates scale2;
 
 //Parameters for load cell 3
 int DOUT3 = 18;
 int CLK3 = 19;
-double location3[] = {5, 1, 0};
+double location3[] = {0.27305, -0.1651, 0};
 coordinates scale3;
 
 //Parameters for load cell 4
 int DOUT4 = 20;
 int CLK4 = 21;
-double location4[] = {-5, 1, 0};
+double location4[] = {0.27305, 0.1651, 0};
 coordinates scale4;
 
 coordinates correction;
@@ -131,7 +132,7 @@ void staticBalancing(double counterWeight) {
     {
       counterWeight = 0.0001;
     }
-    xbee.print(correction.magnitude / counterWeight); xbee.print("\n");
+    xbee.print(39.37 * correction.magnitude / counterWeight); xbee.print("\n");
     Serial.print(correction.magnitude / counterWeight); Serial.print("\n");
 }
 
@@ -213,12 +214,12 @@ double dynamicMoment(double omega, double counterWeight) {
     double momentMagnitude = correction.magnitude;
     //Serial.print("\nDynamic moment: ");
     if (correction.x > 0){
-        xbee.println("C"+String(-momentMagnitude / counterWeight));
-        Serial.println("C"+String(-momentMagnitude / counterWeight));
+        xbee.println("C"+String(39.37 * -momentMagnitude / counterWeight));
+        Serial.println("C"+String(39.37 * -momentMagnitude / counterWeight));
     }
     else{
-        xbee.println("C"+String(momentMagnitude / counterWeight));
-        Serial.println("C"+String(momentMagnitude / counterWeight));
+        xbee.println("C"+String(39.37 * momentMagnitude / counterWeight));
+        Serial.println("C"+String(39.37 * momentMagnitude / counterWeight));
     }
     sensors_event_t event;
     lis.getEvent(&event);
@@ -227,7 +228,7 @@ double dynamicMoment(double omega, double counterWeight) {
 }
 
 void dynamicBalancing(sensors_event_t event, double omega) {
-    double radius = radiusOfRotation(omega, event.acceleration.x);
+    double radius = 39.37 * radiusOfRotation(omega, event.acceleration.x);
     xbee.println("R"+String(radius));
     Serial.println("R"+String(radius));
 }
@@ -240,7 +241,7 @@ void printCoord(coordinates coord, boolean mag, double counterWeight) {
     }
     //Serial.print("\n");
     //Serial.print("COM_LOCATION");
-    str = "x: " + String(coord.x);
+    str = "x: " + String(39.37 * coord.x) + " y:" + String(39.37 * coord.y);
     xbee.println(str);
     Serial.println(str);
 }
