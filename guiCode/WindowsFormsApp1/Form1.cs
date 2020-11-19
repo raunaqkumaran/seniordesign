@@ -22,8 +22,15 @@ namespace WindowsFormsApp1
             arduinoPort = new SerialPort();
             arduinoPort.BaudRate = 9600;
             arduinoPort.PortName = "COM5";
-            Calibration1.Value = Calibration2.Value = Calibration3.Value = Calibration4.Value = 145000;
-            Offset1.Value = Offset2.Value = Offset3.Value = Offset4.Value = 7840;
+            Calibration1.Value = 143550;
+            Offset1.Value = 7414;
+            Calibration2.Value = 143550;
+            Offset2.Value = 27111;
+            Calibration3.Value = 147870;
+            Calibration4.Value = 149378;
+            Offset3.Value = 9854;
+            Offset4.Value = -9045;
+            applyCalibrationFactors();
             Console.WriteLine("STARTING");
         }
 
@@ -196,6 +203,11 @@ namespace WindowsFormsApp1
         }
 
         private void applyCalibration_Click(object sender, EventArgs e)
+        {
+            applyCalibrationFactors();
+        }
+
+        private void applyCalibrationFactors()
         {
             arduinoPort.Open();
             arduinoPort.DiscardInBuffer(); arduinoPort.DiscardOutBuffer();

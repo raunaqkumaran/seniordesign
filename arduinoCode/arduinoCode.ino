@@ -85,7 +85,7 @@ void initializeAccelerometer(Adafruit_LIS3DH &lis) {
         xbee.println("Couldn't start");
         while (1) yield();
     }
-    //Serial.println("LIS3DH found!");
+    Serial.println("LIS3DH found!");
 
     //Serial.print("Range = ");
     //Serial.print(2 << lis.getRange());
@@ -98,6 +98,7 @@ void setupScales(HX711 &loadCell, int dout, int clk, double calibrationFactor, d
     loadCell.set_scale(calibrationFactor);
     loadCell.set_offset(cellOffset);
     loadCell.read_average();
+    Serial.println("Scales calibrated!");
 }
 
 String readString()
