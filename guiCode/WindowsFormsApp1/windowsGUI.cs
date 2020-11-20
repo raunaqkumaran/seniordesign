@@ -205,7 +205,7 @@ namespace WindowsFormsApp1
 
         }
 
-        //Resets the arduino port name if the port selection box in the GUI is modified. 
+        //Resets the arduino port name if the port selection box in the GUI is modified. It would be good to modify how portBox works by populating it only with ports that actually exist. 
         private void portBox(object sender, EventArgs e)
         {
             arduinoPort.PortName = "COM" + portSelector.Value.ToString();
