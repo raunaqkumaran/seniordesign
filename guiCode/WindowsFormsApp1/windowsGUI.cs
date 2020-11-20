@@ -6,13 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace fluidsInMotionGUI
 {
-    //heres a comment
     public partial class windowsGUI : Form
     {
         private const int MillisecondsTimeout = 1200;
-        private const int SmallTimeout = 100;
+        private const int SmallTimeout = 400;
         private Boolean loopStop = false;
         public SerialPort arduinoPort;
 
@@ -29,13 +28,13 @@ namespace WindowsFormsApp1
 
             //Default calibration values. These too, can be changed through the GUI. These are deterined by finding a zero offset for each balance, and then finding a calibration factor against a 2.5 lbs weight
             Calibration1.Value = 143550;
-            Offset1.Value = -24496;
+            Offset1.Value = 19217;
             Calibration2.Value = 143550;
-            Offset2.Value = 159207;
+            Offset2.Value = 98299;
             Calibration3.Value = 147870;
-            Offset3.Value = 163607;
+            Offset3.Value = 113132;
             Calibration4.Value = 149378;
-            Offset4.Value = -20886;
+            Offset4.Value = 24570;
 
             //Set calibration factors and write something to the Console. This won't be visible unless there actually is a console window open. 
             if (SerialPort.GetPortNames().Contains(arduinoPort.PortName))
@@ -64,13 +63,10 @@ namespace WindowsFormsApp1
         private async void startDynamicButton(object sender, EventArgs e)
         {
             arduinoPort.Open();
+            System.Threading.Thread.Sleep(SmallTimeout);
             arduinoPort.DiscardInBuffer();
             arduinoPort.DiscardOutBuffer();
-            staticBalanceButton.Enabled = false;
-            dynamicBalanceButton.Enabled = false;
-            omegaBox.Enabled = false;
-            weightSelectionBox.Enabled = false;
-            applyCalibration.Enabled = false;
+            toggleButtons(false);
             arduinoPort.WriteLine("START_DYNAMIC");
             arduinoPort.WriteLine(omegaBox.Value.ToString());
             loopStop = false;
@@ -78,6 +74,15 @@ namespace WindowsFormsApp1
             arduinoPort.WriteLine(counterWeight.ToString());
             await printDynamic();               //Need this to make sure print dynamic keeps running, but without disabling the rest of the UI (which is what would happen otherwise).
             
+        }
+
+        private void toggleButtons(Boolean val)
+        {
+            staticBalanceButton.Enabled = val;
+            dynamicBalanceButton.Enabled = val;
+            omegaBox.Enabled = val;
+            weightSelectionBox.Enabled = val;
+            applyCalibration.Enabled = val;
         }
 
         private Task printDynamic()
@@ -141,15 +146,12 @@ namespace WindowsFormsApp1
         private void endDynamicButton(object sender, EventArgs e)
         {
             loopStop = true;
-            staticBalanceButton.Enabled = true;
-            dynamicBalanceButton.Enabled = true;
-            weightSelectionBox.Enabled = true;
-            omegaBox.Enabled = true;
-            applyCalibration.Enabled = true;
+            toggleButtons(true);
 
             if (arduinoPort.IsOpen)
             {
                 arduinoPort.WriteLine("END_DYNAMIC");
+                System.Threading.Thread.Sleep(SmallTimeout);
                 arduinoPort.DiscardInBuffer();
                 arduinoPort.DiscardOutBuffer();
             }

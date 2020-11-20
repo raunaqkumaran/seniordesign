@@ -10,10 +10,10 @@
 #include <SoftwareSerial.h>
 
 //Define pin numbers for the LIS3DH accelerometer
-#define LIS3DH_CLK 22 //SCL
-#define LIS3DH_MOSI 23 //SDA
-#define LIS3DH_MISO 24 //SDO
-#define LIS3DH_CS 25  //CS
+#define LIS3DH_CLK 30 //SCL
+#define LIS3DH_MOSI 34 //SDA
+#define LIS3DH_MISO 38 //SDO
+#define LIS3DH_CS 42  //CS
 Adafruit_LIS3DH lis = Adafruit_LIS3DH(LIS3DH_CS, LIS3DH_MOSI, LIS3DH_MISO, LIS3DH_CLK);
 
 double totalForce; //Sum of all forces
