@@ -9,14 +9,14 @@ using System.Windows.Forms;
 namespace WindowsFormsApp1
 {
     //heres a comment
-    public partial class Form1 : Form
+    public partial class windowsGUI : Form
     {
         private const int MillisecondsTimeout = 1200;
         private const int SmallTimeout = 100;
         private Boolean loopStop = false;
         public SerialPort arduinoPort;
 
-        public Form1()
+        public windowsGUI()
         {
             InitializeComponent();
 
@@ -38,7 +38,8 @@ namespace WindowsFormsApp1
             Offset4.Value = -20886;
 
             //Set calibration factors and write something to the Console. This won't be visible unless there actually is a console window open. 
-            applyCalibrationFactors();
+            if (SerialPort.GetPortNames().Contains(arduinoPort.PortName))
+                applyCalibrationFactors();
             Console.WriteLine("STARTING");
         }
 
