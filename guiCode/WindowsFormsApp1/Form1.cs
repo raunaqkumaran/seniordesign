@@ -52,10 +52,10 @@ namespace WindowsFormsApp1
             double value = Decimal.ToDouble(weightSelectionBox.Value);      //Parse the value of the counterbalance, so a correction can be determined. Only looking at correction in the x direction.       
             arduinoPort.WriteLine(value.ToString());                        //Again, all communication is through writing strings to the port buffer. This writes the counterbalance weight to the arduino. 
             String result = arduinoPort.ReadLine();                         //Bring in data back from the arduino through the serial port (the arduino writes to the port via the xbee)
-            comLocation.Text = "Center of mass location (m): " + result;
+            comLocation.Text = "Center of mass location (in): " + result;
             System.Threading.Thread.Sleep(SmallTimeout);                    //Wait a little bit to let things settle before writing to the GUI. Not entirely sure if this is necessary, or helpful. 
             result = arduinoPort.ReadLine();
-            offsetLabel.Text = "Required counter balance offset (m): " + result;
+            offsetLabel.Text = "Required counter balance offset (in): " + result;
             arduinoPort.Close();
         }
 
@@ -128,7 +128,7 @@ namespace WindowsFormsApp1
                         average = Math.Round(average, 3);
                         correctionMoment.Invoke((MethodInvoker)delegate        
                         {
-                            correctionMoment.Text = "Counterbalance correction (m): " + average.ToString();
+                            correctionMoment.Text = "Counterbalance correction (in): " + average.ToString();
                         });
                     }
                 }
