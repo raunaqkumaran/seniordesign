@@ -1,5 +1,7 @@
 #include <math.h>
 
+//Wrapper to manage what is essentially a vector. x, y, z are the basis vectors, and magnitude is...the magnitude (except when it's blank, in which case the x,y,z are locations)
+//Useful for tracking the moment correction required for a statically unbalanced system. x, y, z tell you the direction to move the weight in, magnitude tells you the amount of weight that has to be applied to attain the counter.
 struct coordinates {
 	double x;
 	double y;
@@ -8,19 +10,7 @@ struct coordinates {
 };
 
 
-int add(int a, int b)
-{
-	int res = a + b;
-	return res;
-}
-
-struct loadCell {
-    int DOUT;
-    int CLK;
-    double location[3];
-    double calibration;
-};
-
+//Takes an array and turns it into a coordinate. Doesn't apply a value to the magnitude of the coordinate.
 coordinates coordFromArray(double arr[3])
 {
     coordinates res;
@@ -31,6 +21,7 @@ coordinates coordFromArray(double arr[3])
     return res;
 }
 
+//Calculates the location of the center of mass, using the forces from the load cells, and the locations of the load cells.
 coordinates comLocation(double* forces, coordinates* locations, int length)
 {
 	coordinates com;
@@ -64,7 +55,7 @@ coordinates comLocation(double* forces, coordinates* locations, int length)
 	return com;
 }
 
-
+//Calculates an additional moment that would be required to rebalance the system.
 coordinates correctionMoment(double force, coordinates com)
 {
 	double magnitude = sqrt(pow(com.x, 2) + pow(com.y, 2) + pow(com.z, 2));
@@ -81,6 +72,7 @@ coordinates correctionMoment(double force, coordinates com)
 	return correction;
 }
 
+//Adds up all the values in the array. (If you wanted to calculate the total sum of forces if you had an array of forces from each load cell)
 double sumArr(double* arr, int length)
 {
 	double res = 0;
@@ -89,6 +81,7 @@ double sumArr(double* arr, int length)
 	return res;
 }
 
+//Calculates the radius of rotation. a = omega^2 * r. omega is known from the rotation rate of the structure. a is known from the accelerometer. r is what is returned.
 double radiusOfRotation(double omega, double acceleration)
 {
   if (omega == 0)

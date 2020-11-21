@@ -1,6 +1,6 @@
-﻿namespace WindowsFormsApp1
+﻿namespace fluidsInMotionGUI
 {
-    partial class Form1
+    partial class windowsGUI
     {
         /// <summary>
         /// Required designer variable.
@@ -446,7 +446,7 @@
             this.label8.TabIndex = 31;
             this.label8.Text = "Calibration offset";
             // 
-            // Form1
+            // windowsGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -480,8 +480,8 @@
             this.Controls.Add(this.dynamicBalanceButton);
             this.Controls.Add(this.staticBalanceButton);
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "windowsGUI";
+            this.Text = "Fluids in Motion";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.weightSelectionBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.omegaBox)).EndInit();

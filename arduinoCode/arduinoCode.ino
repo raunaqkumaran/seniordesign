@@ -9,37 +9,38 @@
 #include <Adafruit_Sensor.h>
 #include <SoftwareSerial.h>
 
-#define LIS3DH_CLK 22
-#define LIS3DH_MISO 24
-#define LIS3DH_MOSI 26
-#define LIS3DH_CS 28
+//Define pin numbers for the LIS3DH accelerometer
+#define LIS3DH_CLK 30 //SCL
+#define LIS3DH_MOSI 34 //SDA
+#define LIS3DH_MISO 38 //SDO
+#define LIS3DH_CS 42  //CS
 Adafruit_LIS3DH lis = Adafruit_LIS3DH(LIS3DH_CS, LIS3DH_MOSI, LIS3DH_MISO, LIS3DH_CLK);
 
 double totalForce; //Sum of all forces
-double counterWeight = 5; //Weight of counterweight (Units don't matter here, just be consistent)
+double counterWeight = 5; //Weight of counterweight (Units don't matter here, just be consistent). This gets overwritten by the GUI. 
 
 //Parameters for load cell 1
 int DOUT = 14;
 int CLK = 15;
-double location1[] = {5, 0, 0};
+double location1[] = {0.27305, 0.1651, 0};
 coordinates scale1;
 
 //Parameters for load cell 2
 int DOUT2 = 16;
 int CLK2 = 17;
-double location2[] = {-5, 0, 0};
+double location2[] = {0.27305, -0.1651, 0};
 coordinates scale2;
 
 //Parameters for load cell 3
 int DOUT3 = 18;
 int CLK3 = 19;
-double location3[] = {5, 1, 0};
+double location3[] = {-0.27305, 0.1651, 0};
 coordinates scale3;
 
 //Parameters for load cell 4
 int DOUT4 = 20;
 int CLK4 = 21;
-double location4[] = {-5, 1, 0};
+double location4[] = {-0.27305, -0.1651, 0};
 coordinates scale4;
 
 coordinates correction;
@@ -49,6 +50,8 @@ coordinates locations[] = {coordFromArray(location1), coordFromArray(location2),
 double omega;
 
 HX711 loadCell_1, loadCell_2, loadCell_3, loadCell_4;
+
+//Default offsets and calibration factors. These are overriden by whatever is passed by the GUI
 double calibration_1 = 145000;
 double calibration_2 = 145000;
 double calibration_3 = 145000;
@@ -59,9 +62,11 @@ double offset3 = 7840;
 double offset4 = 7840;
 double sampleTime = 0.5;
 coordinates com;
+SoftwareSerial xbee(10, 11);
 
 void setup() {
     Serial.begin(9600);
+    xbee.begin(9600);
     initializeAccelerometer(lis);
     setupScales(loadCell_1, DOUT, CLK, calibration_1, offset1);
     scale1 = coordFromArray(location1);
@@ -80,9 +85,10 @@ void initializeAccelerometer(Adafruit_LIS3DH &lis) {
 
     if (!lis.begin(0x18)) {   // change this to 0x19 for alternative i2c address
         Serial.println("Couldn't start");
+        xbee.println("Couldn't start");
         while (1) yield();
     }
-    //Serial.println("LIS3DH found!");
+    Serial.println("LIS3DH found!");
 
     //Serial.print("Range = ");
     //Serial.print(2 << lis.getRange());
@@ -90,19 +96,23 @@ void initializeAccelerometer(Adafruit_LIS3DH &lis) {
     lis.getDataRate();
 }
 
+//Initializes each load cell.
 void setupScales(HX711 &loadCell, int dout, int clk, double calibrationFactor, double cellOffset) {
     loadCell.begin(dout, clk);
     loadCell.set_scale(calibrationFactor);
-    loadCell.set_offset(cellOffset);
+    loadCell.set_offset(cellOffset);        //Can replace this with tare() if you want to tare and start from a zero-weight every time, or add in a tare button
     loadCell.read_average();
+    Serial.println("Scales calibrated!");
 }
 
+//Arduino doesn't have a very logical way to read entire strings from a Serial port. This does that.
+//All communication between the user interface and the arduino is by sending strings back and forth. The format of the string, and the order of the strings defines what the quantity is.
 String readString()
 {
     String readString = "";
-    if (Serial.available()) {
-        while (Serial.available() > 0) {
-            char temp = Serial.read();
+    if (xbee.available()) {
+        while (xbee.available() > 0) {
+            char temp = xbee.read();
             if (temp == '\n') {
                 break;
             }
@@ -110,9 +120,11 @@ String readString()
             delay(10);
         }
     }
+    Serial.print(readString);
     return readString;
 }
 
+//Runs static balancing. Pretty straightforward sum of moments to find a center of mass location, and a correction required to move CoM back to (0, 0)
 void staticBalancing(double counterWeight) {
     forces[0] = getLoading(loadCell_1, 15);
     forces[1] = getLoading(loadCell_2, 15);
@@ -126,6 +138,7 @@ void staticBalancing(double counterWeight) {
     {
       counterWeight = 0.0001;
     }
+    xbee.print(39.37 * correction.magnitude / counterWeight); xbee.print("\n"); //Magic constant to convert meters to inches
     Serial.print(correction.magnitude / counterWeight); Serial.print("\n");
 }
 
@@ -134,11 +147,13 @@ void loop() {
     lis.getEvent(&event);
 
     String readstring = readString();
+    //Every time the GUI wants the arduino to do something, it will send a string. This if ladder checks for that string, and reacts accordingly
     if (readstring.length() > 0)
       //Serial.println(readstring);
         if (readstring == "START_STATIC") {
             counterWeight = readString().toDouble();
             staticBalancing(counterWeight);
+            xbee.flush();
             Serial.flush();
         }
         if (readstring == "START_DYNAMIC") {
@@ -147,6 +162,7 @@ void loop() {
             do {
                 dynamicMoment(omega, counterWeight);
             }while(readString() != "END_DYNAMIC");
+            xbee.flush();
             Serial.flush();
         }
         if (readstring == "RECALIBRATE")
@@ -164,6 +180,7 @@ void loop() {
           setupScales(loadCell_2, DOUT2, CLK2, calibration_2, offset2);
           setupScales(loadCell_3, DOUT3, CLK3, calibration_3, offset3);
           setupScales(loadCell_4, DOUT4, CLK4, calibration_4, offset4);
+          xbee.flush();
           Serial.flush();
         }
     }
@@ -182,11 +199,14 @@ void printAccelerometer(sensors_event_t event) {
 
 }
 
+//Gets a load cell reading
 double getLoading(HX711 scale, int samples) {
     double reading = scale.get_units(samples);
     return reading;
 }
 
+//Uses another sum of moments to calculate if there is any residual moment. This is basically the same exact calculation process as the static balancing.
+//"Radius of rotation" should be a constant value if there are no vibrations or precessions, as the accelerometer should be a constant distance away from the rotational axis of the system
 double dynamicMoment(double omega, double counterWeight) {
     double forces[3];
     delay(10);
@@ -203,10 +223,14 @@ double dynamicMoment(double omega, double counterWeight) {
     coordinates correction = correctionMoment(totalForce, com);
     double momentMagnitude = correction.magnitude;
     //Serial.print("\nDynamic moment: ");
-    if (correction.x > 0)
-        Serial.println("C"+String(-momentMagnitude / counterWeight));
-    else
-        Serial.println("C"+String(momentMagnitude / counterWeight));
+    if (correction.x > 0){
+        xbee.println("C"+String(39.37 * -momentMagnitude / counterWeight));
+        Serial.println("C"+String(39.37 * -momentMagnitude / counterWeight));
+    }
+    else{
+        xbee.println("C"+String(39.37 * momentMagnitude / counterWeight));
+        Serial.println("C"+String(39.37 * momentMagnitude / counterWeight));
+    }
     sensors_event_t event;
     lis.getEvent(&event);
     //Serial.print("\nRadius of rotation: ");
@@ -214,7 +238,8 @@ double dynamicMoment(double omega, double counterWeight) {
 }
 
 void dynamicBalancing(sensors_event_t event, double omega) {
-    double radius = radiusOfRotation(omega, event.acceleration.x);
+    double radius = 39.37 * radiusOfRotation(omega, event.acceleration.z);
+    xbee.println("R"+String(radius));
     Serial.println("R"+String(radius));
 }
 
@@ -226,47 +251,7 @@ void printCoord(coordinates coord, boolean mag, double counterWeight) {
     }
     //Serial.print("\n");
     //Serial.print("COM_LOCATION");
-    str = "x: " + String(coord.x);
+    str = "x: " + String(39.37 * coord.x) + " y:" + String(39.37 * coord.y);
+    xbee.println(str);
     Serial.println(str);
 }
-
-//Should be able to ignore this whole function. Here for posterity.
-/*
-void loop2() {
-    // put your main code here, to run repeatedly:
-    sensors_event_t event;
-    lis.getEvent(&event);
-    coordinates com;
-
-    if (Serial.available()) {
-        while (Serial.available()) {
-            Serial.read();
-        }
-        printAccelerometer(event);
-        double radius = radiusOfRotation(omega, event.acceleration.x);
-        Serial.print("Radius of rotation: ");
-        Serial.print(radius);
-        forces[0] = getLoading(loadCell_1);
-        Serial.print("\nLoading on scale 1: ");
-        Serial.print(forces[0]);
-        forces[1] = getLoading(loadCell_2);
-        Serial.print("\nLoading on scale 2: ");
-        Serial.print(forces[1]);
-        forces[2] = getLoading(loadCell_3);
-        Serial.print("\nLoading on scale 3: ");
-        Serial.print(forces[2]);
-        forces[3] = getLoading(loadCell_4);
-        Serial.print("\nLoading on scale 4: ");
-        Serial.print(forces[3]);
-        Serial.print("\nLocation of COM: ");
-        com = comLocation(forces, locations, 4);
-        printCoord(com, false, 0);
-        totalForce = sumArr(forces, 4);
-        correction = correctionMoment(totalForce, com);
-        Serial.print("\nRequired correction: ");
-        printCoord(correction, true, counterWeight);
-        Serial.print("\n\n\n");
-    }
-    delay(100);
-}
-*/
