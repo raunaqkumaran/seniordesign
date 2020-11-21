@@ -55,7 +55,17 @@ namespace fluidsInMotionGUI
             comLocation.Text = "Center of mass location (in): " + result;
             System.Threading.Thread.Sleep(SmallTimeout);                    //Wait a little bit to let things settle before writing to the GUI. Not entirely sure if this is necessary, or helpful. 
             result = arduinoPort.ReadLine();
-            offsetLabel.Text = "Required counter balance offset (in): " + result;
+            double outTemp;
+            bool attempt = Double.TryParse(result, out outTemp);
+            if (attempt)
+            {
+                double res = Double.Parse(result);
+                offsetLabel.Text = "Move counterbalance (in): " + res;
+            }
+            else
+            {
+                offsetLabel.Text = "Move counterbalance (in): " + result;
+            }
             arduinoPort.Close();
         }
 
@@ -153,6 +163,7 @@ namespace fluidsInMotionGUI
                 arduinoPort.WriteLine("END_DYNAMIC");
                 System.Threading.Thread.Sleep(SmallTimeout);
                 arduinoPort.DiscardInBuffer();
+                System.Threading.Thread.Sleep(SmallTimeout);
                 arduinoPort.DiscardOutBuffer();
             }
         }

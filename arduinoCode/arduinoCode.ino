@@ -17,30 +17,30 @@
 Adafruit_LIS3DH lis = Adafruit_LIS3DH(LIS3DH_CS, LIS3DH_MOSI, LIS3DH_MISO, LIS3DH_CLK);
 
 double totalForce; //Sum of all forces
-double counterWeight = 5; //Weight of counterweight (Units don't matter here, just be consistent)
+double counterWeight = 5; //Weight of counterweight (Units don't matter here, just be consistent). This gets overwritten by the GUI. 
 
 //Parameters for load cell 1
 int DOUT = 14;
 int CLK = 15;
-double location1[] = {-0.27305, -0.1651, 0};
+double location1[] = {0.27305, 0.1651, 0};
 coordinates scale1;
 
 //Parameters for load cell 2
 int DOUT2 = 16;
 int CLK2 = 17;
-double location2[] = {-0.27305, 0.1651, 0};
+double location2[] = {0.27305, -0.1651, 0};
 coordinates scale2;
 
 //Parameters for load cell 3
 int DOUT3 = 18;
 int CLK3 = 19;
-double location3[] = {0.27305, -0.1651, 0};
+double location3[] = {-0.27305, 0.1651, 0};
 coordinates scale3;
 
 //Parameters for load cell 4
 int DOUT4 = 20;
 int CLK4 = 21;
-double location4[] = {0.27305, 0.1651, 0};
+double location4[] = {-0.27305, -0.1651, 0};
 coordinates scale4;
 
 coordinates correction;
@@ -238,7 +238,7 @@ double dynamicMoment(double omega, double counterWeight) {
 }
 
 void dynamicBalancing(sensors_event_t event, double omega) {
-    double radius = 39.37 * radiusOfRotation(omega, event.acceleration.x);
+    double radius = 39.37 * radiusOfRotation(omega, event.acceleration.z);
     xbee.println("R"+String(radius));
     Serial.println("R"+String(radius));
 }
