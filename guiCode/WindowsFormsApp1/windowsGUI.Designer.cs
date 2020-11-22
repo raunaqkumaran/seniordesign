@@ -97,9 +97,9 @@
             this.comLocation.Location = new System.Drawing.Point(438, 155);
             this.comLocation.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.comLocation.Name = "comLocation";
-            this.comLocation.Size = new System.Drawing.Size(310, 25);
+            this.comLocation.Size = new System.Drawing.Size(309, 25);
             this.comLocation.TabIndex = 4;
-            this.comLocation.Text = "Center of mass location (m): (N/A)";
+            this.comLocation.Text = "Center of mass location (in): (N/A)";
             this.comLocation.Click += new System.EventHandler(this.label1_Click);
             // 
             // offsetLabel
@@ -108,9 +108,9 @@
             this.offsetLabel.Location = new System.Drawing.Point(904, 155);
             this.offsetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.offsetLabel.Name = "offsetLabel";
-            this.offsetLabel.Size = new System.Drawing.Size(380, 25);
+            this.offsetLabel.Size = new System.Drawing.Size(379, 25);
             this.offsetLabel.TabIndex = 5;
-            this.offsetLabel.Text = "Required counter balance offset (m): (N/A)";
+            this.offsetLabel.Text = "Required counter balance offset (in): (N/A)";
             this.offsetLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // weightLabel
@@ -119,9 +119,9 @@
             this.weightLabel.Location = new System.Drawing.Point(29, 70);
             this.weightLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.weightLabel.Name = "weightLabel";
-            this.weightLabel.Size = new System.Drawing.Size(259, 25);
+            this.weightLabel.Size = new System.Drawing.Size(263, 25);
             this.weightLabel.TabIndex = 7;
-            this.weightLabel.Text = "Counter balance mass (kg): ";
+            this.weightLabel.Text = "Counter balance mass (lbs): ";
             // 
             // correctionMoment
             // 
@@ -129,9 +129,9 @@
             this.correctionMoment.Location = new System.Drawing.Point(438, 327);
             this.correctionMoment.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.correctionMoment.Name = "correctionMoment";
-            this.correctionMoment.Size = new System.Drawing.Size(287, 25);
+            this.correctionMoment.Size = new System.Drawing.Size(286, 25);
             this.correctionMoment.TabIndex = 8;
-            this.correctionMoment.Text = "Counterbalance correction (m): ";
+            this.correctionMoment.Text = "Counterbalance correction (in): ";
             this.correctionMoment.Click += new System.EventHandler(this.label1_Click_2);
             // 
             // button2
@@ -171,9 +171,9 @@
             this.label2.Location = new System.Drawing.Point(29, 260);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(190, 25);
+            this.label2.Size = new System.Drawing.Size(179, 25);
             this.label2.TabIndex = 12;
-            this.label2.Text = "Rotation rate (rad/s):";
+            this.label2.Text = "Rotation rate (rpm):";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // rotationRadius
@@ -182,9 +182,9 @@
             this.rotationRadius.Location = new System.Drawing.Point(438, 425);
             this.rotationRadius.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.rotationRadius.Name = "rotationRadius";
-            this.rotationRadius.Size = new System.Drawing.Size(208, 25);
+            this.rotationRadius.Size = new System.Drawing.Size(207, 25);
             this.rotationRadius.TabIndex = 14;
-            this.rotationRadius.Text = "Radius of rotation (m): ";
+            this.rotationRadius.Text = "Radius of rotation (in): ";
             this.rotationRadius.Click += new System.EventHandler(this.label1_Click_3);
             // 
             // portSelector

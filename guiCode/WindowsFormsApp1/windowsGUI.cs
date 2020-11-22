@@ -49,7 +49,7 @@ namespace fluidsInMotionGUI
             arduinoPort.DiscardInBuffer();      //Discarding buffers is a quick and easy (but probably not "best practice") to clear any characters still in the port buffer as a result of unprocessed messages from the C# to the xbee, or from the xbee to the C#. Makes sure things happen in a predictable and sequential manner. 
             arduinoPort.DiscardOutBuffer();
             arduinoPort.WriteLine("START_STATIC");      //All communication between the GUI and the xbee (thus the arduino) is conducted by writing strings to the port. "START_STATIC" tells the arduino to start sampling load cells for a static balancing calculation
-            double value = Decimal.ToDouble(weightSelectionBox.Value);      //Parse the value of the counterbalance, so a correction can be determined. Only looking at correction in the x direction.       
+            double value = Decimal.ToDouble(weightSelectionBox.Value) * 0.453592;      //Parse the value of the counterbalance, so a correction can be determined. Only looking at correction in the x direction.       
             arduinoPort.WriteLine(value.ToString());                        //Again, all communication is through writing strings to the port buffer. This writes the counterbalance weight to the arduino. 
             String result = arduinoPort.ReadLine();                         //Bring in data back from the arduino through the serial port (the arduino writes to the port via the xbee)
             comLocation.Text = "Center of mass location (in): " + result;
@@ -78,9 +78,10 @@ namespace fluidsInMotionGUI
             arduinoPort.DiscardOutBuffer();
             toggleButtons(false);
             arduinoPort.WriteLine("START_DYNAMIC");
-            arduinoPort.WriteLine(omegaBox.Value.ToString());
+            double rotationRate = Decimal.ToDouble(omegaBox.Value) * 0.104719755;
+            arduinoPort.WriteLine(rotationRate.ToString());
             loopStop = false;
-            double counterWeight = Decimal.ToDouble(weightSelectionBox.Value);
+            double counterWeight = Decimal.ToDouble(weightSelectionBox.Value) * 0.453592;
             arduinoPort.WriteLine(counterWeight.ToString());
             await printDynamic();               //Need this to make sure print dynamic keeps running, but without disabling the rest of the UI (which is what would happen otherwise).
             
