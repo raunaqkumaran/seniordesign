@@ -120,7 +120,7 @@ namespace fluidsInMotionGUI
                     {
                         val =  val.Remove(0, 1);
                         double value = Convert.ToDouble(val);
-                        if (rotationRadiusList.Count > 100)
+                        if (rotationRadiusList.Count > 30)
                         {
                             rotationRadiusList.RemoveAt(0);
                         }
@@ -136,7 +136,7 @@ namespace fluidsInMotionGUI
                     {
                         val = val.Remove(0, 1);
                         double value = Convert.ToDouble(val);
-                        if (correctionMomentList.Count > 100)
+                        if (correctionMomentList.Count > 30)
                         {
                             correctionMomentList.RemoveAt(0);
                         }

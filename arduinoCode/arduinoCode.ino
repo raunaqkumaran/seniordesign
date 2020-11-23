@@ -213,7 +213,8 @@ double dynamicMoment(double omega, double counterWeight) {
     if (counterWeight == 0)
     {
       counterWeight = 0.001;
-    }
+    } 
+    double counterHeight = 0.028;
     forces[0] = getLoading(loadCell_1, 1);
     forces[1] = getLoading(loadCell_2, 1);
     forces[2] = getLoading(loadCell_3, 1);
@@ -224,12 +225,12 @@ double dynamicMoment(double omega, double counterWeight) {
     double momentMagnitude = correction.magnitude;
     //Serial.print("\nDynamic moment: ");
     if (correction.x > 0){
-        xbee.println("C"+String(39.37 * -momentMagnitude / counterWeight));
-        Serial.println("C"+String(39.37 * -momentMagnitude / counterWeight));
+        xbee.println("C"+String(39.37 * momentMagnitude / (counterWeight + (counterWeight / 9.81) * omega * omega * counterHeight)));
+        Serial.println("C"+String(39.37 * momentMagnitude / (counterWeight + (counterWeight / 9.81) * omega * omega * counterHeight)));
     }
     else{
-        xbee.println("C"+String(39.37 * momentMagnitude / counterWeight));
-        Serial.println("C"+String(39.37 * momentMagnitude / counterWeight));
+        xbee.println("C"+String(39.37 * -momentMagnitude / (counterWeight + (counterWeight / 9.81) * omega * omega * counterHeight)));
+        Serial.println("C"+String(39.37 * -momentMagnitude / (counterWeight + (counterWeight / 9.81) * omega * omega * counterHeight)));
     }
     sensors_event_t event;
     lis.getEvent(&event);
