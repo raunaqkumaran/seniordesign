@@ -214,7 +214,7 @@ double dynamicMoment(double omega, double counterWeight) {
     {
       counterWeight = 0.001;
     } 
-    double counterHeight = 0.028;
+    double counterHeight = 0.028; // in meters. need to know the moment arm for the counterbalance's centripetal load. 
     forces[0] = getLoading(loadCell_1, 1);
     forces[1] = getLoading(loadCell_2, 1);
     forces[2] = getLoading(loadCell_3, 1);
@@ -225,7 +225,7 @@ double dynamicMoment(double omega, double counterWeight) {
     double momentMagnitude = correction.magnitude;
     //Serial.print("\nDynamic moment: ");
     if (correction.x > 0){
-        xbee.println("C"+String(39.37 * momentMagnitude / (counterWeight + (counterWeight / 9.81) * omega * omega * counterHeight)));
+        xbee.println("C"+String(39.37 * momentMagnitude / (counterWeight + (counterWeight / 9.81) * omega * omega * counterHeight))); //magic constants to convert from meters to inches
         Serial.println("C"+String(39.37 * momentMagnitude / (counterWeight + (counterWeight / 9.81) * omega * omega * counterHeight)));
     }
     else{
@@ -252,7 +252,7 @@ void printCoord(coordinates coord, boolean mag, double counterWeight) {
     }
     //Serial.print("\n");
     //Serial.print("COM_LOCATION");
-    str = "x: " + String(39.37 * coord.x) + " y:" + String(39.37 * coord.y);
+    str = "x: " + String(39.37 * coord.x) + " y:" + String(39.37 * coord.y);    //conversion factor for meters to inches
     xbee.println(str);
     Serial.println(str);
 }
